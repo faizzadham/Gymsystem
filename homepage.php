@@ -3,6 +3,10 @@ include("connectdb.php");
 include("auth.php");
 ?>
 
+<link rel="stylesheet" href="homepage.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
 <section class="hero">
     <div class="hero-content">
         <h1>Tranform Your Body, Transform Your life</h1>
