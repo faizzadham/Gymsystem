@@ -1,4 +1,5 @@
 <?php
+session_start(); // Start the session at the very beginning
 include("connectdb.php");
 
 $pageTitle = 'Login';
@@ -12,8 +13,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($username) || empty($password)) {
         $error = 'Please fill in all fields.';
     } else {
+        // Prepare the statement
         $stmt = $conn->prepare("SELECT user_id, username, password, role FROM users WHERE username = ?");
-        $stmt->execute([$username]);
+        
+        // Bind the username variable to the "?" placeholder ("s" stands for string)
+        $stmt->bind_param("s", $username);
+        
+        // Execute the statement without passing arguments
+        $stmt->execute();
+        
         $result = $stmt->get_result();
         $user = $result->fetch_assoc();
 
@@ -35,9 +43,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $error = 'Invalid username or password.';
         }
+        $stmt->close(); // Good practice to close the statement
     }
 }
-
 ?>
 
 <div class="auth-wrapper">
