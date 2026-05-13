@@ -11,11 +11,19 @@ $errors = [];
 /*** Fetch fresh member data*/
 $fetchMember = function($db, $uid) {
     $stmt = $db->prepare("SELECT * FROM members WHERE user_id = ?");
-    $stmt->execute([$uid]);
-    return $stmt->fetch();
+    $stmt->bind_param("i", $uid);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $member = $result ? $result->fetch_assoc() : null;
+    $stmt->close();
+    return $member;
 };
 
 $member = $fetchMember($conn, $userId);
+if (!$member) {
+    $errors[] = 'Member profile could not be loaded.';
+    $member = [];
+}
 
 // Handle Form Submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -51,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-require_once '../includes/header.php';
+require_once '../header.php';
 ?>
 
 <div class="container fade-in">
@@ -77,13 +85,13 @@ require_once '../includes/header.php';
             <div class="form-group">
                 <label for="full_name">Full Name *</label>
                 <input type="text" id="full_name" name="full_name" required 
-                       value="<?= htmlspecialchars($member['full_name']) ?>">
+                       value="<?= htmlspecialchars($member['full_name'] ?? '') ?>">
             </div>
 
             <div class="form-group">
                 <label for="email">Email *</label>
                 <input type="email" id="email" name="email" required 
-                       value="<?= htmlspecialchars($member['email']) ?>">
+                       value="<?= htmlspecialchars($member['email'] ?? '') ?>">
             </div>
 
             <div class="form-group">
@@ -98,7 +106,7 @@ require_once '../includes/header.php';
                     <?php foreach (['Male', 'Female', 'Other'] as $opt): ?>
                         <label style="font-weight: normal; cursor: pointer;">
                             <input type="radio" name="gender" value="<?= $opt ?>" 
-                                <?= ($member['gender'] === $opt) ? 'checked' : '' ?>> 
+                                <?= (($member['gender'] ?? '') === $opt) ? 'checked' : '' ?>> 
                             <?= $opt ?>
                         </label>
                     <?php endforeach; ?>
@@ -107,7 +115,7 @@ require_once '../includes/header.php';
 
             <div class="form-group">
                 <label>Member Since</label>
-                <input type="text" value="<?= $member['join_date'] ?>" disabled style="background: var(--bg-secondary);">
+                <input type="text" value="<?= htmlspecialchars($member['join_date'] ?? 'N/A') ?>" disabled style="background: var(--bg-secondary);">
             </div>
 
             <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">

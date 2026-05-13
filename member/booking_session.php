@@ -1,7 +1,7 @@
 <?php
-require_once '../includes/auth.php';
+require_once '../auth.php';
 requireMember();
-require_once '../config/db.php';
+require_once '../connectdb.php';
 
 $pageTitle = 'Book Session';
 $userId    = $_SESSION['user_id'];
@@ -10,11 +10,15 @@ $success   = '';
 
 // 1. Fetch Member Data
 $stmt = $conn->prepare("SELECT member_id, full_name FROM members WHERE user_id = ?");
-$stmt->execute([$userId]);
-$member = $stmt->fetch();
+$stmt->bind_param("i", $userId);
+$stmt->execute();
+$memberResult = $stmt->get_result();
+$member = $memberResult ? $memberResult->fetch_assoc() : null;
+$stmt->close();
 
 // 2. Fetch Available Trainers
-$trainers  = $conn->query("SELECT * FROM trainers WHERE status = 'Available' ORDER BY trainer_name")->fetchAll();
+$trainerResult = $conn->query("SELECT * FROM trainers WHERE status = 'Available' ORDER BY trainer_name");
+$trainers = $trainerResult ? $trainerResult->fetch_all(MYSQLI_ASSOC) : [];
 $preselect = $_GET['trainer'] ?? '';
 
 // 3. Handle Form Submission
@@ -43,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-require_once '../includes/header.php';
+require_once '../header.php';
 ?>
 
 <div class="container fade-in">
@@ -120,4 +124,4 @@ require_once '../includes/header.php';
     </div>
 </div>
 
-<?php require_once '../includes/footer.php'; ?>
+<?php require_once '../footer.php'; ?>

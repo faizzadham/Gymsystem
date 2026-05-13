@@ -13,9 +13,11 @@ $query = "SELECT p.* FROM payments p
           ORDER BY p.payment_date DESC";
 
 $stmt = $conn->prepare($query);
-$stmt->execute([$userId]);
-$payments = $stmt->fetchAll();
-
+$stmt->bind_param("i", $userId);
+$stmt->execute();
+$result = $stmt->get_result();
+$payments = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+$stmt->close();
 
 function getStatusClass($status) {
     return match($status) {
@@ -25,7 +27,7 @@ function getStatusClass($status) {
     };
 }
 
-require_once '../includes/header.php';
+require_once '../header.php';
 ?>
 
 <div class="container fade-in">

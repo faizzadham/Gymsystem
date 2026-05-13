@@ -6,9 +6,10 @@ $pageTitle = 'Personal Trainers';
 
 // Fetch all trainers ordered by name
 $query = "SELECT * FROM trainers ORDER BY trainer_name";
-$trainers = $conn->query($query)->fetchAll();
+$result = $conn->query($query);
+$trainers = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
 
-require_once '../includes/header.php';
+require_once '../header.php';
 ?>
 
 <div class="container fade-in">

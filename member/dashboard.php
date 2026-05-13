@@ -13,8 +13,11 @@ $memberStmt = $conn->prepare("
     LEFT JOIN membership_packages p ON m.package_id = p.package_id 
     WHERE m.user_id = ?
 ");
-$memberStmt->execute([$userId]);
-$member = $memberStmt->fetch();
+$memberStmt->bind_param("i", $userId);
+$memberStmt->execute();
+$memberResult = $memberStmt->get_result();
+$member = $memberResult->fetch_assoc();
+$memberStmt->close();
 
 // 2. Fetch Related Data (only if member exists)
 $recentPayments = [];
@@ -25,8 +28,11 @@ if ($member) {
 
     // Recent Payments
     $payStmt = $conn->prepare("SELECT * FROM payments WHERE member_id = ? ORDER BY payment_date DESC LIMIT 5");
-    $payStmt->execute([$memberId]);
-    $recentPayments = $payStmt->fetchAll();
+    $payStmt->bind_param("i", $memberId);
+    $payStmt->execute();
+    $payResult = $payStmt->get_result();
+    $recentPayments = $payResult->fetch_all(MYSQLI_ASSOC);
+    $payStmt->close();
 
     // Upcoming Sessions
     $sessStmt = $conn->prepare("
@@ -38,12 +44,15 @@ if ($member) {
           AND sb.booking_status IN ('Pending','Approved') 
         ORDER BY sb.session_date ASC LIMIT 3
     ");
-    $sessStmt->execute([$memberId]);
-    $upcomingSessions = $sessStmt->fetchAll();
+    $sessStmt->bind_param("i", $memberId);
+    $sessStmt->execute();
+    $sessResult = $sessStmt->get_result();
+    $upcomingSessions = $sessResult->fetch_all(MYSQLI_ASSOC);
+    $sessStmt->close();
 }
 
 // 3. UI Helper Logic
-$status = $member['status'] ?? 'inactive';
+$status = ($member && isset($member['status'])) ? $member['status'] : 'inactive';
 $statusConfig = [
     'active'   => ['class' => 'green', 'icon' => 'check-circle'],
     'inactive' => ['class' => 'red',   'icon' => 'times-circle'],
@@ -51,12 +60,12 @@ $statusConfig = [
 ];
 $currentStatus = $statusConfig[$status] ?? ['class' => 'red', 'icon' => 'times-circle'];
 
-require_once '../includes/header.php';
+require_once __DIR__ . '/../header.php';
 ?>
 
 <div class="container fade-in">
     <div class="page-header">
-        <h1>Welcome, <?= htmlspecialchars($member['full_name'] ?? $_SESSION['username']) ?>!</h1>
+        <h1>Welcome, <?= htmlspecialchars($member ? ($member['full_name'] ?? $_SESSION['username']) : $_SESSION['username']) ?>!</h1>
         <p>Your membership overview</p>
     </div>
 
@@ -103,7 +112,7 @@ require_once '../includes/header.php';
         <a href="membership.php" class="btn btn-secondary"><i class="fas fa-box"></i> Membership</a>
         <a href="payments.php" class="btn btn-secondary"><i class="fas fa-credit-card"></i> Payments</a>
         <a href="trainers.php" class="btn btn-secondary"><i class="fas fa-user-tie"></i> Trainers</a>
-        <a href="book_session.php" class="btn btn-primary"><i class="fas fa-calendar-plus"></i> Book Session</a>
+        <a href="booking_session.php" class="btn btn-primary"><i class="fas fa-calendar-plus"></i> Book Session</a>
         <a href="timetable.php" class="btn btn-secondary"><i class="fas fa-calendar-alt"></i> My Timetable</a>
     </div>
 
@@ -188,4 +197,4 @@ require_once '../includes/header.php';
     </div>
 </div>
 
-<?php require_once '../includes/footer.php'; ?>
+<?php require_once __DIR__ . '/../footer.php'; ?>
