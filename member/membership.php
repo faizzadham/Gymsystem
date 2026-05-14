@@ -13,12 +13,17 @@ $getMemberData = function($conn, $id) {
             LEFT JOIN membership_packages p ON m.package_id = p.package_id 
             WHERE m.user_id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->execute([$id]);
-    return $stmt->fetch();
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $member = $result ? $result->fetch_assoc() : null;
+    $stmt->close();
+    return $member;
 };
 
 $member = $getMemberData($conn, $userId);
-$packages = $conn->query("SELECT * FROM membership_packages")->fetchAll();
+$packagesResult = $conn->query("SELECT * FROM membership_packages");
+$packages = $packagesResult ? $packagesResult->fetch_all(MYSQLI_ASSOC) : [];
 
 // Handle Membership Renewal
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['renew_package'])) {

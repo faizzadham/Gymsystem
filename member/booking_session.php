@@ -1,18 +1,35 @@
 <?php
 require_once '../auth.php';
 requireMember();
+<<<<<<< HEAD
 require_once '../connectdb.php'; // Updated to match admin's connection file
+=======
+require_once '../connectdb.php';
+>>>>>>> main
 
 $pageTitle = 'Book Session';
 
 // 1. Fetch Member Details using the logged-in User ID
 $stmt = $conn->prepare("SELECT member_id, full_name FROM members WHERE user_id = ?");
+<<<<<<< HEAD
 $stmt->execute([$_SESSION['user_id']]);
 $member = $stmt->fetch();
 
 // 2. Fetch Available Trainers
 $trainersQuery = "SELECT * FROM trainers WHERE status = 'Available' ORDER BY trainer_name";
 $trainers = $conn->query($trainersQuery)->fetchAll();
+=======
+$stmt->bind_param("i", $userId);
+$stmt->execute();
+$memberResult = $stmt->get_result();
+$member = $memberResult ? $memberResult->fetch_assoc() : null;
+$stmt->close();
+
+// 2. Fetch Available Trainers
+$trainerResult = $conn->query("SELECT * FROM trainers WHERE status = 'Available' ORDER BY trainer_name");
+$trainers = $trainerResult ? $trainerResult->fetch_all(MYSQLI_ASSOC) : [];
+$preselect = $_GET['trainer'] ?? '';
+>>>>>>> main
 
 $preselect = $_GET['trainer'] ?? '';
 $errors = [];
