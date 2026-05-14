@@ -4,10 +4,7 @@ requireAdmin();
 require_once '../connectdb.php';  // Changed from db.php to connectdb.php
 
 $pageTitle = 'Confirm Deletion';
-
-$bookingId = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
-
-// 1. Validate ID immediately
+p
 $bookingId = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
 if (!$bookingId) {
