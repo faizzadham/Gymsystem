@@ -62,6 +62,34 @@ foreach ($sessions as $s) {
     $sessionMap[$s['session_date']][$s['session_time']] = $s;
 }
 
+// Get all unique trainer names for search autocomplete
+$allTrainers = $conn->prepare("SELECT DISTINCT t.trainer_name FROM session_bookings sb JOIN trainers t ON sb.trainer_id = t.trainer_id WHERE sb.member_id = ? AND sb.booking_status IN ('Pending','Approved')");
+$allTrainers->bind_param("i", $member['member_id']);
+$allTrainers->execute();
+$trainerResult = $allTrainers->get_result();
+$trainerNames = $trainerResult ? $trainerResult->fetch_all(MYSQLI_NUM) : [];
+$trainerNames = array_column($trainerNames, 0); // Extract just the trainer names
+$allTrainers->close();
+
+// Time slots
+$timeSlots = ['8:00 AM','9:00 AM','10:00 AM','11:00 AM','12:00 PM','1:00 PM','2:00 PM','3:00 PM','4:00 PM','5:00 PM','6:00 PM','7:00 PM','8:00 PM'];
+
+// Days array
+$days = [];
+for ($i = 0; $i < 7; $i++) {
+    $d = clone $weekStart;
+    $d->modify("+{$i} days");
+    $days[] = $d;
+}
+
+// Past / history
+$history = $conn->prepare("SELECT sb.*, t.trainer_name, t.session_fee FROM session_bookings sb JOIN trainers t ON sb.trainer_id = t.trainer_id WHERE sb.member_id = ? AND (sb.session_date < CURDATE() OR sb.booking_status IN ('Completed','Cancelled','Rejected')) ORDER BY sb.session_date DESC LIMIT 20");
+$history->bind_param("i", $member['member_id']);
+$history->execute();
+$historyResult = $history->get_result();
+$pastSessions = $historyResult ? $historyResult->fetch_all(MYSQLI_ASSOC) : [];
+$history->close();
+
 require_once '../header.php';
 ?>
 
