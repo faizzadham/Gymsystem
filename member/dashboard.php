@@ -10,21 +10,6 @@ require_once '../connectdb.php';
 $pageTitle = 'My Dashboard';
 $userId = $_SESSION['user_id'];
 
-<<<<<<< HEAD
-=======
-// 1. Fetch Member & Package Info
-$memberStmt = $conn->prepare("
-    SELECT m.*, p.package_name, p.price 
-    FROM members m 
-    LEFT JOIN membership_packages p ON m.package_id = p.package_id 
-    WHERE m.user_id = ?
-");
-$memberStmt->bind_param("i", $userId);
-$memberStmt->execute();
-$memberResult = $memberStmt->get_result();
-$member = $memberResult->fetch_assoc();
-$memberStmt->close();
->>>>>>> main
 
 $member_sql = "SELECT m.*, p.package_name, p.price 
                FROM members m 
@@ -42,7 +27,6 @@ $upcomingSessions = [];
 if ($member) {
     $memberId = $member['member_id'];
 
-<<<<<<< HEAD
 
     $pay_sql = "SELECT * FROM payments WHERE member_id = ? ORDER BY payment_date DESC LIMIT 5";
     $pay_stmt = mysqli_prepare($conn, $pay_sql);
@@ -70,52 +54,11 @@ if ($member) {
 }
 
 require_once '../header.php'; // Ensure path is correct
-=======
-    // Recent Payments
-    $payStmt = $conn->prepare("SELECT * FROM payments WHERE member_id = ? ORDER BY payment_date DESC LIMIT 5");
-    $payStmt->bind_param("i", $memberId);
-    $payStmt->execute();
-    $payResult = $payStmt->get_result();
-    $recentPayments = $payResult->fetch_all(MYSQLI_ASSOC);
-    $payStmt->close();
-
-    // Upcoming Sessions
-    $sessStmt = $conn->prepare("
-        SELECT sb.*, t.trainer_name 
-        FROM session_bookings sb 
-        JOIN trainers t ON sb.trainer_id = t.trainer_id 
-        WHERE sb.member_id = ? 
-          AND sb.session_date >= CURDATE() 
-          AND sb.booking_status IN ('Pending','Approved') 
-        ORDER BY sb.session_date ASC LIMIT 3
-    ");
-    $sessStmt->bind_param("i", $memberId);
-    $sessStmt->execute();
-    $sessResult = $sessStmt->get_result();
-    $upcomingSessions = $sessResult->fetch_all(MYSQLI_ASSOC);
-    $sessStmt->close();
-}
-
-// 3. UI Helper Logic
-$status = ($member && isset($member['status'])) ? $member['status'] : 'inactive';
-$statusConfig = [
-    'active'   => ['class' => 'green', 'icon' => 'check-circle'],
-    'inactive' => ['class' => 'red',   'icon' => 'times-circle'],
-    'pending'  => ['class' => 'orange','icon' => 'clock']
-];
-$currentStatus = $statusConfig[$status] ?? ['class' => 'red', 'icon' => 'times-circle'];
-
-require_once __DIR__ . '/../header.php';
->>>>>>> main
 ?>
 
 <div class="container fade-in">
     <div class="page-header">
-<<<<<<< HEAD
         <h1>Welcome, <?php echo htmlspecialchars($member['full_name'] ?? $_SESSION['username']); ?>!</h1>
-=======
-        <h1>Welcome, <?= htmlspecialchars($member ? ($member['full_name'] ?? $_SESSION['username']) : $_SESSION['username']) ?>!</h1>
->>>>>>> main
         <p>Your membership overview</p>
     </div>
 
@@ -143,17 +86,8 @@ require_once __DIR__ . '/../header.php';
     </div>
 
     <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:2rem;">
-<<<<<<< HEAD
         <a href="book_session.php" style="padding: 10px 20px; background: #3498db; color: white; text-decoration: none; border-radius: 5px;">Book Session</a>
         <a href="timetable.php" style="padding: 10px 20px; background: #95a5a6; color: white; text-decoration: none; border-radius: 5px;">My Timetable</a>
-=======
-        <a href="profile.php" class="btn btn-primary"><i class="fas fa-user"></i> My Profile</a>
-        <a href="membership.php" class="btn btn-secondary"><i class="fas fa-box"></i> Membership</a>
-        <a href="payments.php" class="btn btn-secondary"><i class="fas fa-credit-card"></i> Payments</a>
-        <a href="trainers.php" class="btn btn-secondary"><i class="fas fa-user-tie"></i> Trainers</a>
-        <a href="booking_session.php" class="btn btn-primary"><i class="fas fa-calendar-plus"></i> Book Session</a>
-        <a href="timetable.php" class="btn btn-secondary"><i class="fas fa-calendar-alt"></i> My Timetable</a>
->>>>>>> main
     </div>
 
     <!-- Upcoming PT Sessions -->
@@ -191,9 +125,4 @@ require_once __DIR__ . '/../header.php';
         </table>
     </div>
 </div>
-<<<<<<< HEAD
 <?php require_once '../footer.php'; ?>
-=======
-
-<?php require_once __DIR__ . '/../footer.php'; ?>
->>>>>>> main
