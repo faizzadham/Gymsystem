@@ -9,7 +9,7 @@ $userId = $_SESSION['user_id'];
 // Fetch payments using a JOIN to handle everything in one trip to the DB
 $query = "SELECT p.* FROM payments p 
           JOIN members m ON p.member_id = m.member_id 
-          WHERE m.user_id = ? 
+        S  WHERE m.user_id = ? 
           ORDER BY p.payment_date DESC";
 
 $stmt = $conn->prepare($query);
@@ -25,7 +25,7 @@ function getStatusClass($status) {
     };
 }
 
-require_once '../includes/header.php';
+require_once '../header.php';
 ?>
 
 <div class="container fade-in">

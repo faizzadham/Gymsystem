@@ -8,7 +8,7 @@ $pageTitle = 'Personal Trainers';
 $query = "SELECT * FROM trainers ORDER BY trainer_name";
 $trainers = $conn->query($query)->fetchAll();
 
-require_once '../includes/header.php';
+require_once '../header.php';
 ?>
 
 <div class="container fade-in">

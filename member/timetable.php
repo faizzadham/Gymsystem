@@ -58,7 +58,7 @@ function getBadgeClass($status) {
     };
 }
 
-require_once '../includes/header.php';
+require_once '../header.php';
 ?>
 
 <div class="container fade-in">
