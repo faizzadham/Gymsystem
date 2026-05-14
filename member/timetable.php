@@ -62,6 +62,8 @@ foreach ($sessions as $s) {
     $sessionMap[$s['session_date']][$s['session_time']] = $s;
 }
 
+<<<<<<< HEAD
+=======
 // Get all unique trainer names for search autocomplete
 $allTrainers = $conn->prepare("SELECT DISTINCT t.trainer_name FROM session_bookings sb JOIN trainers t ON sb.trainer_id = t.trainer_id WHERE sb.member_id = ? AND sb.booking_status IN ('Pending','Approved')");
 $allTrainers->bind_param("i", $member['member_id']);
@@ -90,6 +92,7 @@ $historyResult = $history->get_result();
 $pastSessions = $historyResult ? $historyResult->fetch_all(MYSQLI_ASSOC) : [];
 $history->close();
 
+>>>>>>> main
 require_once '../header.php';
 ?>
 
