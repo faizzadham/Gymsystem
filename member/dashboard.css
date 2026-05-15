@@ -426,3 +426,24 @@ footer .footer-bottom, footer p:last-of-type {
     .btn { width: 100%; justify-content: center; }
     footer { padding: 3rem 1.5rem 1.5rem 1.5rem; }
 }
+
+.logout-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.25rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #f87171 !important; /* Soft Crimson Red */
+    background-color: rgba(239, 68, 68, 0.05);
+    border: 1px dashed rgba(239, 68, 68, 0.25);
+    transition: all 0.2s ease;
+}
+
+.logout-btn:hover {
+    background-color: #ef4444 !important; /* Vibrant Red on Hover */
+    color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+}
