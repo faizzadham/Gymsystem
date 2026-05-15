@@ -1,6 +1,9 @@
 <?php
 session_start();
 
+// Base URL for app links and redirects
+$baseUrl = '/Gymsystem';
+
 // Check if user is logged in
 function isLoggedIn() {
     return isset($_SESSION['user_id']);
@@ -13,26 +16,29 @@ function getUserRole() {
 
 // Require login - redirect if not logged in
 function requireLogin() {
+    global $baseUrl;
     if (!isLoggedIn()) {
-        header("login.php");
+        header("Location: {$baseUrl}/login.php");
         exit();
     }
 }
 
 // Require admin role
 function requireAdmin() {
+    global $baseUrl;
     requireLogin();
     if (getUserRole() !== 'admin') {
-        header("login.php");
+        header("Location: {$baseUrl}/login.php");
         exit();
     }
 }
 
 // Require member role
 function requireMember() {
+    global $baseUrl;
     requireLogin();
     if (getUserRole() !== 'member') {
-        header("login.php");
+        header("Location: {$baseUrl}/login.php");
         exit();
     }
 }

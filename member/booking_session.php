@@ -1,19 +1,13 @@
 <?php
 require_once '../auth.php';
 requireMember();
-require_once '../connectdb.php'; // Updated to match admin's connection file
 require_once '../connectdb.php';
 
 $pageTitle = 'Book Session';
 
 // 1. Fetch Member Details using the logged-in User ID
+$userId = (int) ($_SESSION['user_id'] ?? 0);
 $stmt = $conn->prepare("SELECT member_id, full_name FROM members WHERE user_id = ?");
-$stmt->execute([$_SESSION['user_id']]);
-$member = $stmt->fetch();
-
-// 2. Fetch Available Trainers
-$trainersQuery = "SELECT * FROM trainers WHERE status = 'Available' ORDER BY trainer_name";
-$trainers = $conn->query($trainersQuery)->fetchAll();
 $stmt->bind_param("i", $userId);
 $stmt->execute();
 $memberResult = $stmt->get_result();
@@ -23,8 +17,6 @@ $stmt->close();
 // 2. Fetch Available Trainers
 $trainerResult = $conn->query("SELECT * FROM trainers WHERE status = 'Available' ORDER BY trainer_name");
 $trainers = $trainerResult ? $trainerResult->fetch_all(MYSQLI_ASSOC) : [];
-$preselect = $_GET['trainer'] ?? '';
-
 $preselect = $_GET['trainer'] ?? '';
 $errors = [];
 $success = '';
@@ -43,13 +35,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = 'Session date cannot be in the past.';
     } else {
         // Check for double booking (Prevent trainer from being booked twice for the same slot)
-        $checkQuery = "SELECT COUNT(*) FROM session_bookings 
+        $checkQuery = "SELECT COUNT(*) AS booking_count FROM session_bookings 
                        WHERE trainer_id = ? AND session_date = ? AND session_time = ? 
                        AND booking_status IN ('Pending','Approved')";
         $check = $conn->prepare($checkQuery);
-        $check->execute([$trainerId, $date, $time]);
-        
-        if ($check->fetchColumn() > 0) {
+        $check->bind_param("iss", $trainerId, $date, $time);
+        $check->execute();
+        $check->bind_result($bookingCount);
+        $check->fetch();
+        $check->close();
+
+        if ($bookingCount > 0) {
             $errors[] = 'This trainer is already booked for that date and time. Please choose another slot.';
         } else {
             // Insert the new booking with 'Pending' status for Admin review
@@ -57,12 +53,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                           (member_id, trainer_id, session_date, session_time, session_type, booking_status, notes) 
                           VALUES (?, ?, ?, ?, ?, 'Pending', ?)";
             $insertStmt = $conn->prepare($insertSql);
-            
-            if ($insertStmt->execute([$member['member_id'], $trainerId, $date, $time, $type, $notes])) {
+            $insertStmt->bind_param("iissss", $member['member_id'], $trainerId, $date, $time, $type, $notes);
+
+            if ($insertStmt->execute()) {
                 $success = 'Session booked successfully! Please wait for admin approval.';
             } else {
                 $errors[] = 'Database error: Unable to process booking.';
             }
+            $insertStmt->close();
         }
     }
 }

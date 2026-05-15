@@ -21,33 +21,39 @@ $getMemberData = function($conn, $id) {
     return $member;
 };
 
-$member = $getMemberData($conn, $userId);
+$member = $getMemberData($conn, $userId) ?: [];
 $packagesResult = $conn->query("SELECT * FROM membership_packages");
 $packages = $packagesResult ? $packagesResult->fetch_all(MYSQLI_ASSOC) : [];
 
 // Handle Membership Renewal
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['renew_package'])) {
     $pkgId = (int)$_POST['renew_package'];
-    
+
     // Fetch selected package details
     $pkgStmt = $conn->prepare("SELECT * FROM membership_packages WHERE package_id = ?");
-    $pkgStmt->execute([$pkgId]);
-    $pkgData = $pkgStmt->fetch();
+    $pkgStmt->bind_param("i", $pkgId);
+    $pkgStmt->execute();
+    $pkgResult = $pkgStmt->get_result();
+    $pkgData = $pkgResult ? $pkgResult->fetch_assoc() : null;
+    $pkgStmt->close();
 
     if ($pkgData && $member) {
         $newExpiry = date('Y-m-d', strtotime("+" . $pkgData['duration'] . " months"));
-        
+
         // Update Member Record
-        $updateSql = "UPDATE members SET package_id = ?, status = 'active', expiry_date = ? WHERE member_id = ?";
-        $conn->prepare($updateSql)->execute([$pkgId, $newExpiry, $member['member_id']]);
-        
+        $updateStmt = $conn->prepare("UPDATE members SET package_id = ?, status = 'active', expiry_date = ? WHERE member_id = ?");
+        $updateStmt->bind_param("isi", $pkgId, $newExpiry, $member['member_id']);
+        $updateStmt->execute();
+        $updateStmt->close();
+
         // Record Payment
-        $paySql = "INSERT INTO payments (member_id, payment_date, amount, payment_method, payment_status) 
-                   VALUES (?, CURDATE(), ?, 'Online', 'Paid')";
-        $conn->prepare($paySql)->execute([$member['member_id'], $pkgData['price']]);
-        
+        $payStmt = $conn->prepare("INSERT INTO payments (member_id, payment_date, amount, payment_method, payment_status) VALUES (?, CURDATE(), ?, 'Online', 'Paid')");
+        $payStmt->bind_param("id", $member['member_id'], $pkgData['price']);
+        $payStmt->execute();
+        $payStmt->close();
+
         $success = 'Membership renewed successfully!';
-        
+
         // Refresh member data for display
         $member = $getMemberData($conn, $userId);
     }
@@ -79,7 +85,7 @@ require_once '../header.php';
             <div>
                 <p class="text-label">Status</p>
                 <p>
-                    <span class="badge <?= ($member['status'] === 'active') ? 'badge-success' : 'badge-danger' ?>">
+                    <span class="badge <?= (($member['status'] ?? '') === 'active') ? 'badge-success' : 'badge-danger' ?>">
                         <?= ucfirst($member['status'] ?? 'unknown') ?>
                     </span>
                 </p>

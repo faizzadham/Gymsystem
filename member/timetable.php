@@ -104,7 +104,7 @@ require_once '../header.php';
     <?php endif; ?>
 
     <div style="margin-bottom:1.5rem; display:flex; gap:0.75rem; flex-wrap:wrap;">
-        <a href="book_session.php" class="btn btn-primary"><i class="fas fa-plus"></i> Book New Session</a>
+        <a href="booking_session.php" class="btn btn-primary"><i class="fas fa-plus"></i> Book New Session</a>
         <a href="trainers.php" class="btn btn-secondary"><i class="fas fa-user-tie"></i> View Trainers</a>
     </div>
 
