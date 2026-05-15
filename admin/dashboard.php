@@ -79,146 +79,168 @@ $recentBookings = $result->fetch_all(MYSQLI_ASSOC);
 require_once '../header.php';
 ?>
 
-<!-- You can reuse the CSS from the bookings.php I gave you earlier -->
-<style>
-    /* ... Add the same CSS here or link to a stylesheet ... */
-    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
-    .stat-card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: flex; align-items: center; }
-    .stat-icon { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; color: white; font-size: 20px; }
-    .blue { background: #3498db; } .green { background: #2ecc71; } .red { background: #e74c3c; } .purple { background: #9b59b6; }
-    .badge { padding: 4px 8px; border-radius: 4px; font-size: 11px; color: white; }
-    .badge-success { background: #2ecc71; } .badge-warning { background: #f1c40f; } .badge-danger { background: #e74c3c; } .badge-info { background: #3498db; }
-</style>
+<link rel="stylesheet" href="dashboard.css">
 
 <div class="admin-layout">
     <?php include 'sidebar.php'; ?>
-    <div class="admin-content">
+    
+    <div class="admin-content fade-in">
         <div class="page-header">
-            <h1>Dashboard</h1>
-            <p>Welcome back, <?php echo htmlspecialchars($_SESSION['username']); ?>!</p>
+            <h1>Admin Dashboard</h1>
+            <p>Welcome back, <?php echo htmlspecialchars($_SESSION['username']); ?>! Here is your facility overview.</p>
         </div>
 
-        <!-- Membership Stats -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-icon blue"><i class="fas fa-users"></i></div>
-                <div class="stat-info">
-                    <h3><?php echo $totalMembers; ?></h3>
-                    <p>Total Members</p>
-                </div>
+        <div class="content-container">
+            <div class="section-title">
+                <h2><i class="fas fa-id-card"></i> Membership Analytics</h2>
             </div>
-            <div class="stat-card">
-                <div class="stat-icon green"><i class="fas fa-user-check"></i></div>
-                <div class="stat-info">
-                    <h3><?php echo $activeMembers; ?></h3>
-                    <p>Active Memberships</p>
-                </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon red"><i class="fas fa-user-times"></i></div>
-                <div class="stat-info">
-                    <h3><?php echo $expiredMembers; ?></h3>
-                    <p>Expired Memberships</p>
-                </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon purple"><i class="fas fa-money-bill-wave"></i></div>
-                <div class="stat-info">
-                    <h3>RM <?php echo number_format($monthlyIncome, 2); ?></h3>
-                    <p>Monthly Income</p>
-                </div>
-            </div>
-        </div>
 
-        <!-- PT Stats -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-icon blue"><i class="fas fa-dumbbell"></i></div>
-                <div class="stat-info">
-                    <h3><?php echo $totalPTSessions; ?></h3>
-                    <p>Total PT Sessions</p>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon blue"><i class="fas fa-users"></i></div>
+                    <div class="stat-info">
+                        <h3><?php echo $totalMembers; ?></h3>
+                        <p>Total Members</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon green"><i class="fas fa-user-check"></i></div>
+                    <div class="stat-info">
+                        <h3><?php echo $activeMembers; ?></h3>
+                        <p>Active Memberships</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon red"><i class="fas fa-user-times"></i></div>
+                    <div class="stat-info">
+                        <h3><?php echo $expiredMembers; ?></h3>
+                        <p>Expired Memberships</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon purple"><i class="fas fa-money-bill-wave"></i></div>
+                    <div class="stat-info">
+                        <h3>RM <?php echo number_format($monthlyIncome, 2); ?></h3>
+                        <p>Monthly Income</p>
+                    </div>
                 </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-icon green"><i class="fas fa-calendar-check"></i></div>
-                <div class="stat-info">
-                    <h3><?php echo $activeBookings; ?></h3>
-                    <p>Active Bookings</p>
-                </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon purple"><i class="fas fa-coins"></i></div>
-                <div class="stat-info">
-                    <h3>RM <?php echo number_format($monthlyPTRevenue, 2); ?></h3>
-                    <p>Monthly PT Revenue</p>
-                </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon green"><i class="fas fa-user-tie"></i></div>
-                <div class="stat-info">
-                    <h3><?php echo $availableTrainers; ?></h3>
-                    <p>Available Trainers</p>
-                </div>
-            </div>
-        </div>
 
-        <!-- Recent Members -->
-        <div class="card" style="margin-bottom:1.5rem;">
-            <div class="card-header">
-                <h3>Recent Members</h3>
-                <a href="members.php" class="btn btn-sm btn-secondary">View All</a>
+            <div class="section-title" style="margin-top: 2rem;">
+                <h2><i class="fas fa-dumbbell"></i> Personal Training Overview</h2>
             </div>
-            <div class="table-wrapper">
-                <table>
-                    <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Package</th><th>Status</th><th>Joined</th></tr></thead>
-                    <tbody>
-                        <?php if (empty($recentMembers)): ?>
-                            <tr><td colspan="6" style="text-align:center;color:var(--text-muted);">No members yet.</td></tr>
-                        <?php else: foreach ($recentMembers as $m): ?>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon blue"><i class="fas fa-dumbbell"></i></div>
+                    <div class="stat-info">
+                        <h3><?php echo $totalPTSessions; ?></h3>
+                        <p>Total PT Sessions</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon green"><i class="fas fa-calendar-check"></i></div>
+                    <div class="stat-info">
+                        <h3><?php echo $activeBookings; ?></h3>
+                        <p>Active Bookings</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon purple"><i class="fas fa-coins"></i></div>
+                    <div class="stat-info">
+                        <h3>RM <?php echo number_format($monthlyPTRevenue, 2); ?></h3>
+                        <p>Monthly PT Revenue</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon orange"><i class="fas fa-user-tie"></i></div>
+                    <div class="stat-info">
+                        <h3><?php echo $availableTrainers; ?></h3>
+                        <p>Available Trainers</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 2.5rem; margin-bottom: 2rem;">
+                <div class="card-header">
+                    <h3><i class="fas fa-user-plus" style="color: var(--primary);"></i> Recent Registrations</h3>
+                    <a href="members.php" class="btn btn-sm btn-secondary">View All Members</a>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
                             <tr>
-                                <td><?php echo htmlspecialchars($m['full_name']); ?></td>
-                                <td><?php echo htmlspecialchars($m['email']); ?></td>
-                                <td><?php echo htmlspecialchars($m['phone']); ?></td>
-                                <td><?php echo htmlspecialchars($m['package_name'] ?? 'None'); ?></td>
-                                <td><span class="badge <?php echo $m['status'] === 'active' ? 'badge-success' : 'badge-danger'; ?>"><?php echo ucfirst($m['status']); ?></span></td>
-                                <td><?php echo $m['join_date']; ?></td>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Package</th>
+                                <th>Status</th>
+                                <th>Joined</th>
                             </tr>
-                        <?php endforeach; endif; ?>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            <?php if (empty($recentMembers)): ?>
+                                <tr><td colspan="6" style="text-align:center;color:var(--text-muted);">No members yet.</td></tr>
+                            <?php else: foreach ($recentMembers as $m): ?>
+                                <tr>
+                                    <td><strong><?php echo htmlspecialchars($m['full_name']); ?></strong></td>
+                                    <td><?php echo htmlspecialchars($m['email']); ?></td>
+                                    <td><?php echo htmlspecialchars($m['phone']); ?></td>
+                                    <td><span class="package-tag"><?php echo htmlspecialchars($m['package_name'] ?? 'None'); ?></span></td>
+                                    <td>
+                                        <span class="badge <?php echo $m['status'] === 'active' ? 'badge-success' : 'badge-danger'; ?>">
+                                            <?php echo ucfirst($m['status']); ?>
+                                        </span>
+                                    </td>
+                                    <td><?php echo $m['join_date']; ?></td>
+                                </tr>
+                            <?php endforeach; endif; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
 
-        <!-- Recent Bookings -->
-        <div class="card">
-            <div class="card-header">
-                <h3>Recent PT Bookings</h3>
-                <a href="bookings.php" class="btn btn-sm btn-secondary">View All</a>
-            </div>
-            <div class="table-wrapper">
-                <table>
-                    <thead><tr><th>Member</th><th>Trainer</th><th>Date</th><th>Time</th><th>Type</th><th>Status</th></tr></thead>
-                    <tbody>
-                        <?php if (empty($recentBookings)): ?>
-                            <tr><td colspan="6" style="text-align:center;color:var(--text-muted);">No bookings yet.</td></tr>
-                        <?php else: foreach ($recentBookings as $b): ?>
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-history" style="color: var(--primary);"></i> Recent Activity & Bookings</h3>
+                    <a href="bookings.php" class="btn btn-sm btn-secondary">View All Bookings</a>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
                             <tr>
-                                <td><?php echo htmlspecialchars($b['full_name']); ?></td>
-                                <td><?php echo htmlspecialchars($b['trainer_name']); ?></td>
-                                <td><?php echo $b['session_date']; ?></td>
-                                <td><?php echo $b['session_time']; ?></td>
-                                <td><?php echo $b['session_type']; ?></td>
-                                <td><span class="badge <?php
-                                    echo match($b['booking_status']) {
-                                        'Approved' => 'badge-success',
-                                        'Pending' => 'badge-warning',
-                                        'Completed' => 'badge-info',
-                                        default => 'badge-danger'
-                                    }; ?>"><?php echo $b['booking_status']; ?></span></td>
+                                <th>Member</th>
+                                <th>Trainer</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Type</th>
+                                <th>Status</th>
                             </tr>
-                        <?php endforeach; endif; ?>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            <?php if (empty($recentBookings)): ?>
+                                <tr><td colspan="6" style="text-align:center;color:var(--text-muted);">No bookings yet.</td></tr>
+                            <?php else: foreach ($recentBookings as $b): ?>
+                                <tr>
+                                    <td><strong><?php echo htmlspecialchars($b['full_name']); ?></strong></td>
+                                    <td><?php echo htmlspecialchars($b['trainer_name']); ?></td>
+                                    <td><?php echo $b['session_date']; ?></td>
+                                    <td><?php echo $b['session_time']; ?></td>
+                                    <td><?php echo $b['session_type']; ?></td>
+                                    <td>
+                                        <span class="badge <?php
+                                            echo match($b['booking_status']) {
+                                                'Approved' => 'badge-success',
+                                                'Pending' => 'badge-warning',
+                                                'Completed' => 'badge-info',
+                                                default => 'badge-danger'
+                                            }; ?>"><?php echo $b['booking_status']; ?></span>
+                                    </td>
+                                </tr>
+                            <?php endforeach; endif; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
