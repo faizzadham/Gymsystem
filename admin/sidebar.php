@@ -52,7 +52,6 @@
 
     <div class="sidebar-label">Account</div>
     <ul class="sidebar-menu">
-        <!-- Path leads out of admin folder to the main directory -->
-        <li><a href="../logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+        <li><a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
     </ul>
 </div>
