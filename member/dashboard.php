@@ -63,13 +63,17 @@ $currentStatus = $statusConfig[$status] ?? ['class' => 'red', 'icon' => 'times-c
 require_once __DIR__ . '/../header.php';
 ?>
 
-<div class="container fade-in">
-    <div class="page-header">
-        <h1>Welcome, <?= htmlspecialchars($member ? ($member['full_name'] ?? $_SESSION['username']) : $_SESSION['username']) ?>!</h1>
-        <p>Your membership overview</p>
-    </div>
+<link rel="stylesheet" href="dashboard.css">
 
-    <!-- Stats Grid -->
+<div class="page-header">
+    <div class="container" style="margin: 0 auto; padding: 0;">
+        <h1>Welcome Back, <?= htmlspecialchars($member ? ($member['full_name'] ?? $_SESSION['username']) : $_SESSION['username']) ?>!</h1>
+        <p>Access your fitness overview</p>
+    </div>
+</div>
+
+<div class="container fade-in">
+
     <div class="stats-grid">
         <div class="stat-card">
             <div class="stat-icon blue"><i class="fas fa-id-card"></i></div>
@@ -106,7 +110,6 @@ require_once __DIR__ . '/../header.php';
         </div>
     </div>
 
-    <!-- Navigation Shortcuts -->
     <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:2rem;">
         <a href="profile.php" class="btn btn-primary"><i class="fas fa-user"></i> My Profile</a>
         <a href="membership.php" class="btn btn-secondary"><i class="fas fa-box"></i> Membership</a>
@@ -116,11 +119,10 @@ require_once __DIR__ . '/../header.php';
         <a href="timetable.php" class="btn btn-secondary"><i class="fas fa-calendar-alt"></i> My Timetable</a>
     </div>
 
-    <!-- Upcoming PT Sessions -->
     <?php if (!empty($upcomingSessions)): ?>
     <div class="card" style="margin-bottom:1.5rem;">
         <div class="card-header">
-            <h3><i class="fas fa-dumbbell" style="color:var(--accent);"></i> Upcoming PT Sessions</h3>
+            <h3><i class="fas fa-dumbbell" style="color:var(--primary);"></i> Upcoming PT Sessions</h3>
             <a href="timetable.php" class="btn btn-sm btn-secondary">View All</a>
         </div>
         <div class="table-wrapper">
@@ -154,7 +156,6 @@ require_once __DIR__ . '/../header.php';
     </div>
     <?php endif; ?>
 
-    <!-- Recent Payments -->
     <div class="card">
         <div class="card-header">
             <h3>Recent Payments</h3>
