@@ -1,29 +1,26 @@
 <?php
 require_once '../auth.php';
 requireMember();
-require_once '../connectdb.php'; // Updated to match admin's connection file
-require_once '../connectdb.php';
+require_once '../connectdb.php'; 
 
 $pageTitle = 'Book Session';
 
 // 1. Fetch Member Details using the logged-in User ID
+$userId = $_SESSION['user_id'];
 $stmt = $conn->prepare("SELECT member_id, full_name FROM members WHERE user_id = ?");
-$stmt->execute([$_SESSION['user_id']]);
-$member = $stmt->fetch();
-
-// 2. Fetch Available Trainers
-$trainersQuery = "SELECT * FROM trainers WHERE status = 'Available' ORDER BY trainer_name";
-$trainers = $conn->query($trainersQuery)->fetchAll();
-$stmt->bind_param("i", $userId);
+$stmt->bind_param("i", $userId); // Corrected to use bind_param for MySQLi
 $stmt->execute();
 $memberResult = $stmt->get_result();
-$member = $memberResult ? $memberResult->fetch_assoc() : null;
+$member = $memberResult->fetch_assoc();
 $stmt->close();
+
+if (!$member) {
+    die("Error: Member profile not found. Please contact an administrator.");
+}
 
 // 2. Fetch Available Trainers
 $trainerResult = $conn->query("SELECT * FROM trainers WHERE status = 'Available' ORDER BY trainer_name");
 $trainers = $trainerResult ? $trainerResult->fetch_all(MYSQLI_ASSOC) : [];
-$preselect = $_GET['trainer'] ?? '';
 
 $preselect = $_GET['trainer'] ?? '';
 $errors = [];
@@ -42,28 +39,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif ($date < date('Y-m-d')) {
         $errors[] = 'Session date cannot be in the past.';
     } else {
-        // Check for double booking (Prevent trainer from being booked twice for the same slot)
-        $checkQuery = "SELECT COUNT(*) FROM session_bookings 
+        // Check for double booking
+        $checkQuery = "SELECT * FROM session_bookings 
                        WHERE trainer_id = ? AND session_date = ? AND session_time = ? 
                        AND booking_status IN ('Pending','Approved')";
         $check = $conn->prepare($checkQuery);
-        $check->execute([$trainerId, $date, $time]);
+        $check->bind_param("iss", $trainerId, $date, $time);
+        $check->execute();
+        $checkResult = $check->get_result();
         
-        if ($check->fetchColumn() > 0) {
+        if ($checkResult->num_rows > 0) {
             $errors[] = 'This trainer is already booked for that date and time. Please choose another slot.';
         } else {
-            // Insert the new booking with 'Pending' status for Admin review
+            // Insert the new booking
             $insertSql = "INSERT INTO session_bookings 
                           (member_id, trainer_id, session_date, session_time, session_type, booking_status, notes) 
                           VALUES (?, ?, ?, ?, ?, 'Pending', ?)";
             $insertStmt = $conn->prepare($insertSql);
+            $insertStmt->bind_param("iissss", $member['member_id'], $trainerId, $date, $time, $type, $notes);
             
-            if ($insertStmt->execute([$member['member_id'], $trainerId, $date, $time, $type, $notes])) {
+            if ($insertStmt->execute()) {
                 $success = 'Session booked successfully! Please wait for admin approval.';
             } else {
                 $errors[] = 'Database error: Unable to process booking.';
             }
+            $insertStmt->close();
         }
+        $check->close();
     }
 }
 
@@ -81,7 +83,7 @@ require_once '../header.php';
             <div class="alert alert-success">
                 <i class="fas fa-check-circle"></i> <?php echo $success; ?>
             </div>
-            <div class="btn-group" style="justify-content:center; margin-top:1.5rem;">
+            <div class="btn-group" style="display: flex; justify-content: center; gap: 10px; margin-top: 1.5rem;">
                 <a href="timetable.php" class="btn btn-primary">
                     <i class="fas fa-calendar-alt"></i> My Timetable
                 </a>
@@ -97,64 +99,60 @@ require_once '../header.php';
                 </div>
             <?php endforeach; ?>
 
-            <form method="POST" class="form-grid">
-                <!-- Member Name (Read Only) -->
-                <div class="form-group full-width">
+            <form method="POST">
+                <div class="form-group">
                     <label>Booking For</label>
-                    <input type="text" value="<?php echo htmlspecialchars($member['full_name']); ?>" disabled style="background:#eee; cursor:not-allowed;">
+                    <input type="text" value="<?php echo htmlspecialchars($member['full_name']); ?>" disabled style="background:#eee; cursor:not-allowed; width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
                 </div>
 
-                <!-- Trainer Selection -->
-                <div class="form-group">
-                    <label for="trainer_id">Select Trainer *</label>
-                    <select id="trainer_id" name="trainer_id" required>
-                        <option value="">-- Choose Trainer --</option>
-                        <?php foreach ($trainers as $t): ?>
-                            <option value="<?php echo $t['trainer_id']; ?>" <?php echo ($preselect == $t['trainer_id']) ? 'selected' : ''; ?>>
-                                <?php echo htmlspecialchars($t['trainer_name']); ?> (<?php echo $t['specialization']; ?>)
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px;">
+                    <div class="form-group">
+                        <label for="trainer_id">Select Trainer *</label>
+                        <select id="trainer_id" name="trainer_id" required style="width: 100%; padding: 10px;">
+                            <option value="">-- Choose Trainer --</option>
+                            <?php foreach ($trainers as $t): ?>
+                                <option value="<?php echo $t['trainer_id']; ?>" <?php echo ($preselect == $t['trainer_id']) ? 'selected' : ''; ?>>
+                                    <?php echo htmlspecialchars($t['trainer_name']); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="session_type">Session Type *</label>
+                        <select id="session_type" name="session_type" required style="width: 100%; padding: 10px;">
+                            <option value="Strength">Strength Training</option>
+                            <option value="Cardio">Cardiovascular</option>
+                            <option value="Weight Loss">Weight Loss</option>
+                            <option value="Rehab">Rehabilitation</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="session_date">Date *</label>
+                        <input type="date" id="session_date" name="session_date" required min="<?php echo date('Y-m-d'); ?>" style="width: 100%; padding: 10px;">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="session_time">Time Slot *</label>
+                        <select id="session_time" name="session_time" required style="width: 100%; padding: 10px;">
+                            <option value="">-- Select Time --</option>
+                            <?php 
+                            $slots = ['8:00 AM','9:00 AM','10:00 AM','11:00 AM','12:00 PM','1:00 PM','2:00 PM','3:00 PM','4:00 PM','5:00 PM','6:00 PM','7:00 PM','8:00 PM'];
+                            foreach ($slots as $ts): ?>
+                                <option value="<?php echo $ts; ?>"><?php echo $ts; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
                 </div>
 
-                <!-- Session Type -->
-                <div class="form-group">
-                    <label for="session_type">Session Type *</label>
-                    <select id="session_type" name="session_type" required>
-                        <option value="Strength">Strength Training</option>
-                        <option value="Cardio">Cardiovascular</option>
-                        <option value="Weight Loss">Weight Loss</option>
-                        <option value="Rehab">Rehabilitation</option>
-                    </select>
-                </div>
-
-                <!-- Date -->
-                <div class="form-group">
-                    <label for="session_date">Date *</label>
-                    <input type="date" id="session_date" name="session_date" required min="<?php echo date('Y-m-d'); ?>">
-                </div>
-
-                <!-- Time -->
-                <div class="form-group">
-                    <label for="session_time">Time Slot *</label>
-                    <select id="session_time" name="session_time" required>
-                        <option value="">-- Select Time --</option>
-                        <?php 
-                        $slots = ['8:00 AM','9:00 AM','10:00 AM','11:00 AM','12:00 PM','1:00 PM','2:00 PM','3:00 PM','4:00 PM','5:00 PM','6:00 PM','7:00 PM','8:00 PM'];
-                        foreach ($slots as $ts): ?>
-                            <option value="<?php echo $ts; ?>"><?php echo $ts; ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-
-                <!-- Notes -->
-                <div class="form-group full-width">
+                <div class="form-group" style="margin-top: 15px;">
                     <label for="notes">Additional Notes</label>
-                    <textarea id="notes" name="notes" rows="3" placeholder="Health conditions or specific goals..."></textarea>
+                    <textarea id="notes" name="notes" rows="3" placeholder="Health conditions or specific goals..." style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc;"></textarea>
                 </div>
 
-                <div class="btn-group full-width" style="margin-top:1rem;">
-                    <button type="submit" class="btn btn-primary" style="width:100%;">
+                <div style="margin-top:20px;">
+                    <button type="submit" class="btn btn-primary" style="width:100%; padding: 12px; font-weight: bold;">
                         <i class="fas fa-paper-plane"></i> Confirm Booking Request
                     </button>
                 </div>
