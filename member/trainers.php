@@ -61,7 +61,7 @@ require_once '../header.php';
                     </span>
                     
                     <?php if ($isAvailable): ?>
-                        <a href="book_session.php?trainer=<?= $t['trainer_id'] ?>" class="btn btn-sm btn-primary">
+                        <a href="booking_session.php?trainer=<?= $t['trainer_id'] ?>" class="btn btn-sm btn-primary">
                             <i class="fas fa-calendar-plus"></i> Book
                         </a>
                     <?php endif; ?>

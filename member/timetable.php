@@ -198,7 +198,7 @@ require_once '../header.php';
     <?php if (empty($sessions)): ?>
     <div class="calendar-empty-week">
         <i class="fas fa-calendar-times"></i>
-        No sessions booked for this week. <a href="book_session.php" style="color:var(--accent);">Book one now!</a>
+        No sessions booked for this week. <a href="booking_session.php" style="color:var(--accent);">Book one now!</a>
     </div>
     <?php endif; ?>
 
