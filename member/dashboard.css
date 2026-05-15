@@ -1,0 +1,428 @@
+/* ==========================================================================
+   Fitzone Premium Dashboard Stylesheet (dashboard.css)
+   ========================================================================== */
+
+/* --- CSS Variables & Design Tokens --- */
+:root {
+    --brand-blue-start: #2563eb;
+    --brand-blue-end: #1d4ed8;
+    --brand-navy: #1e3a8a;
+    
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+    --secondary: #f1f5f9;
+    --secondary-hover: #e2e8f0;
+    
+    --bg-page: #f8fafc;
+    --bg-container: #ffffff;
+    --border-color: #e2e8f0;
+    
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+
+    /* Status Colors */
+    --clr-green: #10b981;
+    --clr-red: #ef4444;
+    --clr-orange: #f59e0b;
+    --clr-blue: #2563eb;
+    --clr-purple: #8b5cf6;
+}
+
+/* --- Base Page Setup --- */
+body {
+    background-color: var(--bg-page);
+    margin: 0;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: var(--text-main);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Keeps footer pushed to the bottom if content is short */
+}
+
+/* Ensure container takes remaining vertical room before footer */
+.container.fade-in {
+    flex: 1;
+}
+
+/* --- Clean Up Header/Navbar Component --- */
+header, nav, ul[class*="nav"], .navbar {
+    background-color: #ffffff !important;
+    border-bottom: 1px solid var(--border-color);
+    padding: 0.75rem 2rem !important;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+ul li a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: color 0.2s ease;
+}
+
+ul li a:hover {
+    color: var(--primary);
+}
+
+/* --- Fitzone Top Banner Dynamic Header --- */
+.page-header {
+    background: linear-gradient(135deg, var(--brand-blue-start), var(--brand-blue-end));
+    color: #ffffff;
+    padding: 4.5rem 1.5rem 6.5rem 1.5rem;
+    text-align: center;
+    margin-top: 0;
+}
+
+.page-header h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin: 0 0 0.5rem 0;
+    letter-spacing: 0.03em;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.page-header p {
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 400;
+}
+
+/* --- Container Layout --- */
+.container {
+    max-width: 1200px;
+    margin: -4rem auto 4rem auto;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+/* --- Stats Grid Layout --- */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: #ffffff;
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    border-radius: 16px;
+    padding: 1.75rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.04), 0 4px 6px -2px rgba(15, 23, 42, 0.02);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.08), 0 10px 10px -5px rgba(15, 23, 42, 0.04);
+}
+
+.stat-icon {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+}
+
+.stat-icon.blue { background-color: #eff6ff; color: var(--clr-blue); }
+.stat-icon.green { background-color: #ecfdf5; color: var(--clr-green); }
+.stat-icon.red { background-color: #fef2f2; color: var(--clr-red); }
+.stat-icon.orange { background-color: #fff7ed; color: var(--clr-orange); }
+.stat-icon.purple { background-color: #f5f3ff; color: var(--clr-purple); }
+
+.stat-info h3 {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--brand-navy);
+}
+
+.stat-info p {
+    margin: 0.25rem 0 0 0;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+}
+
+/* --- Navigation Shortcuts Block --- */
+div[style*="display:flex"] {
+    background: #ffffff;
+    padding: 1rem 1.25rem;
+    border-radius: 14px;
+    box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.03);
+    border: 1px solid var(--border-color);
+    margin-bottom: 2rem !important;
+    align-items: center;
+}
+
+/* --- Styled Action Buttons --- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.25rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: #ffffff !important;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background-color: var(--secondary);
+    color: #334155 !important;
+}
+
+.btn-secondary:hover {
+    background-color: var(--secondary-hover);
+}
+
+.btn-sm {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+    border-radius: 6px;
+}
+
+/* --- Content Panels / Layout Cards --- */
+.card {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.02);
+    overflow: hidden;
+}
+
+.card-header {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-header h3 {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--brand-navy);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+/* --- Tables Layout --- */
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.9rem;
+}
+
+th {
+    background-color: #f8fafc;
+    color: var(--text-muted);
+    font-weight: 600;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+}
+
+td {
+    padding: 1.2rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    color: #334155;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr:hover td {
+    background-color: #fafafa;
+}
+
+/* --- Status Badges --- */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: 50px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.badge-success { background-color: #d1fae5; color: #065f46; }
+.badge-warning { background-color: #fef3c7; color: #92400e; }
+.badge-danger { background-color: #fee2e2; color: #991b1b; }
+
+
+/* ==========================================================================
+   NEW UPGRADED FOOTER STYLES
+   ========================================================================== */
+footer, .site-footer {
+    background-color: #0f172a; /* Deep charcoal/navy matching the theme */
+    color: #94a3b8;
+    padding: 4rem 2rem 2rem 2rem;
+    font-size: 0.9rem;
+    border-top: 1px solid #1e293b;
+    margin-top: auto; /* Keeps footer pinned to page bottom */
+}
+
+/* Dynamic container if your footer layout has a structural wrapping div */
+footer .footer-container, footer .container, .footer-grid {
+    max-width: 1200px;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2.5rem;
+}
+
+/* Footer Headings */
+footer h4, footer h3, footer strong {
+    color: #ffffff;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 1.25rem;
+    display: block;
+    letter-spacing: 0.02em;
+}
+
+/* Catch brand text block styles */
+footer p {
+    line-height: 1.6;
+    margin: 0 0 1rem 0;
+}
+
+/* Clean up footer inline links (Quick Links) */
+footer a, footer .quick-links a {
+    color: #94a3b8;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    display: block;
+    margin-bottom: 0.75rem;
+}
+
+footer a:hover {
+    color: #3b82f6; /* Pops blue on link hovers */
+}
+
+/* Handle horizontal item layouts if they appear as simple spans */
+footer span, footer div {
+    display: block;
+}
+
+/* Align contact row line heights nicely with the icons */
+footer i, footer svg {
+    margin-right: 0.5rem;
+    color: #3b82f6;
+    width: 16px;
+    text-align: center;
+}
+
+/* Social Media Icons Styling Group */
+footer .social-icons, footer div[class*="social"], footer div:has(.fa-brands) {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+footer .social-icons a, footer div[class*="social"] a {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: #1e293b;
+    border-radius: 50%;
+    color: #ffffff !important;
+    font-size: 1.1rem;
+    transition: all 0.2s ease;
+    margin: 0 !important;
+}
+
+footer .social-icons a:hover, footer div[class*="social"] a:hover {
+    background-color: var(--primary);
+    transform: translateY(-3px);
+}
+
+/* Bottom Copyright Bar Row */
+footer .footer-bottom, footer p:last-of-type {
+    grid-column: 1 / -1; /* Spans full width of the grid */
+    border-top: 1px solid #1e293b;
+    padding-top: 1.5rem;
+    margin-top: 1.5rem;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #64748b;
+}
+
+
+/* --- Animations & Responsive Adaptations --- */
+.fade-in {
+    animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+    ul {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+    .page-header h1 { font-size: 2rem; }
+    div[style*="display:flex"] {
+        flex-direction: column;
+        gap: 0.5rem !important;
+    }
+    .btn { width: 100%; justify-content: center; }
+    footer { padding: 3rem 1.5rem 1.5rem 1.5rem; }
+}
