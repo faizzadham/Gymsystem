@@ -12,57 +12,101 @@ $trainers = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
 require_once '../header.php';
 ?>
 
+<link rel="stylesheet" href="trainers.css">
 <div class="container fade-in">
     <div class="page-header">
-        <h1><i class="fas fa-user-tie"></i> Our Personal Trainers</h1>
-        <p>Meet our certified trainers and book a session</p>
+        <h1>
+            <i class="fas fa-user-tie"></i>
+            Our Personal Trainers
+        </h1>
+        <p>
+            Meet our certified trainers and book a session
+        </p>
     </div>
 
-    <div class="features-grid">
+    <div class="trainer-grid">
+
         <?php foreach ($trainers as $t): ?>
-            <?php 
+
+            <?php
                 $isAvailable = ($t['status'] === 'Available');
-                $statusClass = $isAvailable ? 'badge-success' : 'badge-warning';
+
+                $statusClass = $isAvailable
+                    ? 'badge-success'
+                    : 'badge-warning';
             ?>
-            <div class="card trainer-card">
-                <!-- Header: Avatar & Title -->
-                <div style="text-align: center; margin-bottom: 1rem;">
-                    <div style="width: 70px; height: 70px; border-radius: 50%; background: var(--gradient); display: flex; align-items: center; justify-content: center; margin: 0 auto 0.75rem; font-size: 1.5rem; color: #fff;">
-                        <i class="fas fa-user-tie"></i>
+
+            <div class="trainer-card">
+
+                <!-- Avatar -->
+                <div class="avatar-wrapper">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+
+                <!-- Header -->
+                <div class="trainer-header">
+                    <h3>
+                        <?= htmlspecialchars($t['trainer_name']) ?>
+                    </h3>
+
+                    <span class="badge-info">
+                        <?= htmlspecialchars($t['specialization']) ?>
+                    </span>
+                </div>
+
+                <!-- Trainer Info -->
+                <div class="trainer-meta-list">
+
+                    <div class="trainer-meta-item">
+                        <i class="fas fa-calendar-day"></i>
+
+                        <span>
+                            <?= htmlspecialchars($t['available_days']) ?>
+                        </span>
                     </div>
-                    <h3><?= htmlspecialchars($t['trainer_name']) ?></h3>
-                    <span class="badge badge-info"><?= htmlspecialchars($t['specialization']) ?></span>
+
+                    <div class="trainer-meta-item">
+                        <i class="fas fa-clock"></i>
+
+                        <span>
+                            <?= htmlspecialchars($t['available_time']) ?>
+                        </span>
+                    </div>
+
+                    <div class="trainer-meta-item">
+                        <i class="fas fa-phone"></i>
+
+                        <span>
+                            <?= htmlspecialchars($t['contact_number']) ?>
+                        </span>
+                    </div>
+
+                    <div class="trainer-meta-item fee-highlight">
+                        <i class="fas fa-tag"></i>
+
+                        <span>
+                            RM <?= number_format($t['session_fee'], 2) ?>
+
+                            <span class="fee-period">
+                                / session
+                            </span>
+                        </span>
+                    </div>
                 </div>
 
-                <!-- Body: Trainer Details -->
-                <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem;">
-                    <p style="margin-bottom: 0.4rem;">
-                        <i class="fas fa-calendar-day" style="width: 20px; color: var(--accent);"></i> 
-                        <?= htmlspecialchars($t['available_days']) ?>
-                    </p>
-                    <p style="margin-bottom: 0.4rem;">
-                        <i class="fas fa-clock" style="width: 20px; color: var(--accent);"></i> 
-                        <?= htmlspecialchars($t['available_time']) ?>
-                    </p>
-                    <p style="margin-bottom: 0.4rem;">
-                        <i class="fas fa-phone" style="width: 20px; color: var(--accent);"></i> 
-                        <?= htmlspecialchars($t['contact_number']) ?>
-                    </p>
-                    <p>
-                        <i class="fas fa-tag" style="width: 20px; color: var(--accent);"></i> 
-                        RM <?= number_format($t['session_fee'], 2) ?> / session
-                    </p>
-                </div>
+                <!-- Footer -->
+                <div class="trainer-card-footer">
 
-                <!-- Footer: Status & Booking Action -->
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
-                    <span class="badge <?= $statusClass ?>">
+                    <span class="<?= $statusClass ?>">
                         <?= htmlspecialchars($t['status']) ?>
                     </span>
-                    
+
                     <?php if ($isAvailable): ?>
-                        <a href="booking_session.php?trainer=<?= $t['trainer_id'] ?>" class="btn btn-sm btn-primary">
-                            <i class="fas fa-calendar-plus"></i> Book
+                        <a
+                            href="booking_session.php?trainer=<?= $t['trainer_id'] ?>"
+                            class="btn-book-session">
+                            <i class="fas fa-calendar-plus"></i>
+                            Book Session
                         </a>
                     <?php endif; ?>
                 </div>
@@ -70,4 +114,3 @@ require_once '../header.php';
         <?php endforeach; ?>
     </div>
 </div>
-

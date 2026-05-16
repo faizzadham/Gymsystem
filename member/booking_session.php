@@ -68,6 +68,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 require_once '../header.php';
 ?>
 
+<link rel="stylesheet" href="booking_session.css">
+
 <main class="container fade-in">
     <div class="page-header">
         <h1><i class="fas fa-calendar-plus"></i> Book a Training Session</h1>
