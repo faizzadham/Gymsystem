@@ -61,6 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 require_once '../header.php';
 ?>
+<link rel="stylesheet" href="profile.css">
 
 <div class="container fade-in">
     <div class="page-header">
@@ -68,6 +69,8 @@ require_once '../header.php';
         <p>View and update your personal information</p>
     </div>
 
+    <div class="profile-page">
+    <div class="container fade-in">
     <div class="card" style="max-width: 600px; margin: 0 auto;">
         <?php if ($success): ?>
             <div class="alert alert-success">

@@ -62,10 +62,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['renew_package'])) {
 require_once '../header.php';
 ?>
 
+<link rel="stylesheet" href="membership.css?">
+
 <div class="container fade-in">
     <div class="page-header">
         <h1><i class="fas fa-box"></i> Membership Details</h1>
-        <p>View your current membership and renew</p>
+        <p>View your current membership details and renew or update your plan below.</p>
     </div>
 
     <?php if ($success): ?>
@@ -74,9 +76,8 @@ require_once '../header.php';
         </div>
     <?php endif; ?>
 
-    <!-- Current Membership Card -->
     <div class="card" style="max-width: 600px; margin-bottom: 2rem;">
-        <h3 style="margin-bottom: 1rem;">Current Membership</h3>
+        <h3>Current Membership</h3>
         <div class="stats-grid" style="grid-template-columns: 1fr 1fr;">
             <div>
                 <p class="text-label">Package</p>
@@ -101,12 +102,11 @@ require_once '../header.php';
         </div>
     </div>
 
-    <!-- Renewal Card -->
     <div class="card" style="max-width: 600px;">
-        <h3 style="margin-bottom: 1rem;">Renew / Change Package</h3>
-        <div class="features-grid" style="grid-template-columns: 1fr;">
+        <h3>Renew / Change Package</h3>
+        <div class="features-grid">
             <?php foreach ($packages as $p): ?>
-                <div class="card package-item">
+                <div class="package-item">
                     <div>
                         <h4><?= htmlspecialchars($p['package_name']) ?></h4>
                         <p class="package-meta">
@@ -124,19 +124,3 @@ require_once '../header.php';
         </div>
     </div>
 </div>
-
-<style>
-    /* Added some utility classes for cleaner inline styles */
-    .text-label { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.2rem; }
-    .text-value { font-size: 1.1rem; font-weight: 600; margin: 0; }
-    .package-item { 
-        display: flex; 
-        justify-content: space-between; 
-        align-items: center; 
-        flex-wrap: wrap; 
-        gap: 1rem; 
-        margin-bottom: 0.5rem;
-    }
-    .package-meta { color: var(--text-secondary); font-size: 0.9rem; margin: 0; }
-</style>
-

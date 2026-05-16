@@ -27,50 +27,56 @@ function getStatusClass($status) {
     };
 }
 
+// 1. The Header loads FIRST with its own styles
 require_once '../header.php';
 ?>
 
-<div class="container fade-in">
-    <div class="page-header">
+<link rel="stylesheet" href="payments.css">
+
+<div class="payments-page-wrapper">
+    
+    <div class="payment-hero-banner">
         <h1><i class="fas fa-credit-card"></i> Payment History</h1>
         <p>View all your payment records</p>
     </div>
 
-    <div class="table-wrapper">
-        <table>
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Date</th>
-                    <th>Amount (RM)</th>
-                    <th>Method</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php if (empty($payments)): ?>
+    <div class="payment-container fade-in">
+        <div class="payment-table-card">
+            <table>
+                <thead>
                     <tr>
-                        <td colspan="5" style="text-align:center; color:var(--text-muted);">
-                            No payment records found.
-                        </td>
+                        <th style="width: 8%;">#</th>
+                        <th style="width: 27%;">Date</th>
+                        <th style="width: 25%;">Amount (RM)</th>
+                        <th style="width: 23%;">Method</th>
+                        <th style="width: 17%;">Status</th>
                     </tr>
-                <?php else: ?>
-                    <?php foreach ($payments as $index => $p): ?>
+                </thead>
+                <tbody>
+                    <?php if (empty($payments)): ?>
                         <tr>
-                            <td><?= $index + 1 ?></td>
-                            <td><?= htmlspecialchars($p['payment_date']) ?></td>
-                            <td><?= number_format($p['amount'], 2) ?></td>
-                            <td><?= htmlspecialchars($p['payment_method']) ?></td>
-                            <td>
-                                <span class="badge <?= getStatusClass($p['payment_status']) ?>">
-                                    <?= htmlspecialchars($p['payment_status']) ?>
-                                </span>
+                            <td colspan="5" style="text-align:center; color:#6c757d; padding: 40px 0;">
+                                No payment records found.
                             </td>
                         </tr>
-                    <?php endforeach; ?>
-                <?php endif; ?>
-            </tbody>
-        </table>
+                    <?php else: ?>
+                        <?php foreach ($payments as $index => $p): ?>
+                            <tr>
+                                <td><?= $index + 1 ?></td>
+                                <td><?= htmlspecialchars(date('Y-m-d', strtotime($p['payment_date']))) ?></td>
+                                <td><?= number_format($p['amount'], 2) ?></td>
+                                <td><?= htmlspecialchars($p['payment_method']) ?></td>
+                                <td>
+                                    <span class="badge <?= getStatusClass($p['payment_status']) ?>">
+                                        <?= htmlspecialchars($p['payment_status']) ?>
+                                    </span>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
     </div>
+    
 </div>
-

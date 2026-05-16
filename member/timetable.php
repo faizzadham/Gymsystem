@@ -93,20 +93,23 @@ $history->close();
 require_once '../header.php';
 ?>
 
+<link rel="stylesheet" href="timetable.css">
+
+
 <div class="container fade-in">
     <div class="page-header">
         <h1><i class="fas fa-calendar-alt"></i> My Timetable</h1>
         <p>View your booked trainers in a weekly calendar view</p>
     </div>
 
+    <div class="action-buttons-row">
+        <a href="booking_session.php" class="btn-fit-gradient"><i class="fas fa-plus"></i> Book New Session</a>
+        <a href="trainers.php" class="btn-fit-dark"><i class="fas fa-user-tie"></i> View Trainers</a>
+    </div>
+
     <?php if (isset($_GET['msg'])): ?>
         <div class="alert alert-success"><i class="fas fa-check-circle"></i> <?php echo htmlspecialchars($_GET['msg']); ?></div>
     <?php endif; ?>
-
-    <div style="margin-bottom:1.5rem; display:flex; gap:0.75rem; flex-wrap:wrap;">
-        <a href="booking_session.php" class="btn btn-primary"><i class="fas fa-plus"></i> Book New Session</a>
-        <a href="trainers.php" class="btn btn-secondary"><i class="fas fa-user-tie"></i> View Trainers</a>
-    </div>
 
     <!-- Search & Week Navigation -->
     <div class="timetable-controls">
@@ -279,3 +282,69 @@ require_once '../header.php';
 
 <?php require_once '../footer.php'; ?>
 
+<div class="card-wrapper-layout">
+        
+        <?php if (isset($_GET['msg'])): ?>
+            <div class="alert alert-success" style="background: var(--status-approved-blue-bg); color: var(--status-approved-blue); padding: 1rem; border-radius: var(--border-radius-inner); font-weight: 600;"><i class="fas fa-check-circle"></i> <?php echo htmlspecialchars($_GET['msg']); ?></div>
+        <?php endif; ?>
+
+        <div class="timetable-actions-row">
+            <a href="booking_session.php" class="btn-primary" style="text-decoration:none;"><i class="fas fa-plus"></i> Book New Session</a>
+            <a href="trainers.php" class="btn-primary" style="background: #ffffff !important; border: 1px solid var(--border-light) !important; color: var(--text-secondary) !important; text-decoration:none;"><i class="fas fa-user-tie"></i> View Trainers</a>
+        </div>
+
+        <div class="timetable-controls">
+            <div class="week-nav">
+                <a href="timetable.php?week=<?php echo $weekOffset - 1; ?>" class="btn-week" title="Previous Week">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                <?php if ($weekOffset !== 0): ?>
+                    <a href="timetable.php?week=0" class="btn-today">Today</a>
+                <?php endif; ?>
+                <span class="week-label">
+                    <?php echo $weekStart->format('M d'); ?> — <?php echo $weekEnd->format('M d, Y'); ?>
+                </span>
+                <a href="timetable.php?week=<?php echo $weekOffset + 1; ?>" class="btn-week" title="Next Week">
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+            </div>
+            <div class="trainer-search-box">
+                <input type="text" id="trainerSearch" placeholder="Search booked trainer..." autocomplete="off">
+                <i class="fas fa-search search-icon"></i>
+            </div>
+        </div>
+
+        <div id="searchResultsCount" class="search-results-count"></div>
+
+        <div class="calendar-legend">
+            <div class="legend-item"><span class="legend-dot approved"></span> Approved</div>
+            <div class="legend-item"><span class="legend-dot pending"></span> Pending</div>
+            <div class="legend-item"><span class="legend-dot highlighted"></span> Search Match</div>
+        </div>
+
+        <div class="calendar-wrapper">
+            <table class="calendar-table">
+               </table>
+        </div>
+
+        <?php if (empty($sessions)): ?>
+        <div class="calendar-empty-week">
+            <i class="fas fa-calendar-times"></i>
+            No sessions booked for this week. <a href="booking_session.php" style="color:var(--brand-blue);">Book one now!</a>
+        </div>
+        <?php endif; ?>
+
+        <div class="card">
+            <h3><i class="fas fa-history" style="color:var(--text-muted);"></i> Session History</h3>
+            <?php if (empty($pastSessions)): ?>
+                <p style="text-align:center;color:var(--text-secondary);margin:0;padding:1rem 0;">No past sessions found.</p>
+            <?php else: ?>
+                <div class="table-wrapper">
+                    <table>
+                        </table>
+                </div>
+            <?php endif; ?>
+        </div>
+
+       
+    </div> 
