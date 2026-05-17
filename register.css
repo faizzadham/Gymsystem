@@ -1,4 +1,4 @@
-/* register.css - Modern Gym Aesthetic */
+
 :root {
     --primary-navy: #1e3a8a;
     --accent-blue: #3b82f6;
@@ -16,37 +16,37 @@ body {
     color: var(--text-dark);
 }
 
-/* Hero Section */
+
 .hero {
     background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-    padding: 100px 20px 140px; /* Extra bottom padding for the overlap */
+    padding: 100px 20px 140px; 
     text-align: center;
     color: var(--soft-white);
 }
 
 .hero h1 {
-    font-size: clamp(2rem, 5vw, 3.5rem); /* Responsive font size */
+    font-size: clamp(2rem, 5vw, 3.5rem); 
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 2px;
     margin: 0 auto 20px;
 }
 
-/* Form Container - Fixing the "Boring" Wide Look */
+
 .auth-wrapper {
     display: flex;
     justify-content: center;
     padding: 0 20px 60px;
-    margin-top: -80px; /* Pulls the card up into the hero section */
+    margin-top: -80px; 
 }
 
 .auth-card {
     background: var(--soft-white);
     padding: 40px;
-    border-radius: 16px; /* Rounder corners for a modern feel */
+    border-radius: 16px; 
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
     width: 100%;
-    max-width: 500px; /* Prevents the "stretched" look in image_ae449b.png */
+    max-width: 500px; 
 }
 
 .auth-card h2 {
@@ -66,7 +66,7 @@ body {
     font-size: 15px;
 }
 
-/* Modern Input Styling */
+
 .form-group {
     margin-bottom: 20px;
 }
@@ -96,7 +96,7 @@ body {
     box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
 }
 
-/* Custom Gender Selection (No more boring radio dots) */
+
 .radio-group {
     display: flex;
     gap: 12px;
@@ -132,7 +132,7 @@ body {
     border-color: var(--primary-navy);
 }
 
-/* Action Button */
+
 .btn-primary {
     width: 100%;
     background: linear-gradient(to right, var(--primary-navy), var(--accent-blue));

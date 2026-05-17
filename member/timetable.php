@@ -16,7 +16,7 @@ if (!$member) {
     die("Member not found.");
 }
 
-// Handle cancel
+
 if (isset($_GET['cancel'])) {
     $cancelId = (int)$_GET['cancel'];
     $cancelStmt = $conn->prepare("UPDATE session_bookings SET booking_status = 'Cancelled' WHERE booking_id = ? AND member_id = ? AND booking_status IN ('Pending','Approved')");
@@ -27,13 +27,13 @@ if (isset($_GET['cancel'])) {
     exit();
 }
 
-// Get current week offset
+
 $weekOffset = isset($_GET['week']) ? (int)$_GET['week'] : 0;
 
-// Calculate the start of the week (Monday)
+
 $today = new DateTime();
 $today->modify("{$weekOffset} week");
-$dayOfWeek = (int)$today->format('N'); // 1=Mon, 7=Sun
+$dayOfWeek = (int)$today->format('N'); 
 $today->modify('-' . ($dayOfWeek - 1) . ' days');
 $weekStart = clone $today;
 $weekEnd = clone $today;
@@ -42,7 +42,7 @@ $weekEnd->modify('+6 days');
 $startStr = $weekStart->format('Y-m-d');
 $endStr = $weekEnd->format('Y-m-d');
 
-// Fetch sessions for this week
+
 $weekSessions = $conn->prepare("SELECT sb.*, t.trainer_name, t.session_fee, t.specialization 
     FROM session_bookings sb 
     JOIN trainers t ON sb.trainer_id = t.trainer_id 
@@ -56,25 +56,25 @@ $sessResult = $weekSessions->get_result();
 $sessions = $sessResult ? $sessResult->fetch_all(MYSQLI_ASSOC) : [];
 $weekSessions->close();
 
-// Build lookup: date => time => session
+
 $sessionMap = [];
 foreach ($sessions as $s) {
     $sessionMap[$s['session_date']][$s['session_time']] = $s;
 }
 
-// Get all unique trainer names for search autocomplete
+
 $allTrainers = $conn->prepare("SELECT DISTINCT t.trainer_name FROM session_bookings sb JOIN trainers t ON sb.trainer_id = t.trainer_id WHERE sb.member_id = ? AND sb.booking_status IN ('Pending','Approved')");
 $allTrainers->bind_param("i", $member['member_id']);
 $allTrainers->execute();
 $trainerResult = $allTrainers->get_result();
 $trainerNames = $trainerResult ? $trainerResult->fetch_all(MYSQLI_NUM) : [];
-$trainerNames = array_column($trainerNames, 0); // Extract just the trainer names
+$trainerNames = array_column($trainerNames, 0); 
 $allTrainers->close();
 
-// Time slots
+
 $timeSlots = ['8:00 AM','9:00 AM','10:00 AM','11:00 AM','12:00 PM','1:00 PM','2:00 PM','3:00 PM','4:00 PM','5:00 PM','6:00 PM','7:00 PM','8:00 PM'];
 
-// Days array
+
 $days = [];
 for ($i = 0; $i < 7; $i++) {
     $d = clone $weekStart;
@@ -82,7 +82,7 @@ for ($i = 0; $i < 7; $i++) {
     $days[] = $d;
 }
 
-// Past / history
+
 $history = $conn->prepare("SELECT sb.*, t.trainer_name, t.session_fee FROM session_bookings sb JOIN trainers t ON sb.trainer_id = t.trainer_id WHERE sb.member_id = ? AND (sb.session_date < CURDATE() OR sb.booking_status IN ('Completed','Cancelled','Rejected')) ORDER BY sb.session_date DESC LIMIT 20");
 $history->bind_param("i", $member['member_id']);
 $history->execute();
@@ -242,7 +242,7 @@ require_once '../header.php';
 </div>
 
 <script>
-// Trainer search & highlight
+
 (function() {
     const searchInput = document.getElementById('trainerSearch');
     const resultsBadge = document.getElementById('searchResultsCount');
@@ -268,7 +268,7 @@ require_once '../header.php';
             resultsBadge.innerHTML = '<i class="fas fa-search"></i> ' + matchCount + ' session' + (matchCount !== 1 ? 's' : '') + ' found for "' + this.value.trim() + '"';
             resultsBadge.classList.add('visible');
 
-            // Scroll to first highlighted session
+            
             const firstMatch = document.querySelector('.session-cell.highlighted');
             if (firstMatch) {
                 firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });

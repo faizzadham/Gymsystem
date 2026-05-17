@@ -5,10 +5,10 @@ require_once '../connectdb.php';
 
 $pageTitle = 'Edit Member';
 
-// Get ID from URL - using user_id to match your members.php links
+
 $id = $_GET['id'] ?? 0;
 
-// Fetch member details using MySQLi
+
 $stmt = $conn->prepare("SELECT * FROM members WHERE user_id = ?");
 $stmt->bind_param("i", $id);
 $stmt->execute();
@@ -20,7 +20,7 @@ if (!$member) {
     exit(); 
 }
 
-// Fetch packages for the dropdown
+
 $packagesResult = $conn->query("SELECT * FROM membership_packages");
 $packages = ($packagesResult) ? $packagesResult->fetch_all(MYSQLI_ASSOC) : [];
 
@@ -40,10 +40,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (empty($errors)) {
-        // Prepare the UPDATE statement (Note: we use user_id in the WHERE clause)
+        
         $updateStmt = $conn->prepare("UPDATE members SET full_name=?, email=?, phone=?, gender=?, package_id=?, status=?, expiry_date=? WHERE user_id=?");
         
-        // Handle potential null for package_id
+        
         $pId = !empty($packageId) ? $packageId : null;
         
         $updateStmt->bind_param("ssssissi", $fullName, $email, $phone, $gender, $pId, $status, $expiryDate, $id);
@@ -59,16 +59,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 <style>
-    body { font-family: sans-serif; background: #f4f7f6; padding: 20px; }
+    body { font-family: sans-serif; background: 
     .container { max-width: 700px; margin: auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
     .form-group { margin-bottom: 15px; }
     label { display: block; margin-bottom: 5px; font-weight: bold; }
-    input, select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+    input, select { width: 100%; padding: 10px; border: 1px solid 
     .radio-group { display: flex; gap: 15px; padding: 10px 0; }
     .btn { padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; color: white; text-decoration: none; display: inline-block; }
-    .btn-primary { background: #3498db; }
-    .btn-secondary { background: #95a5a6; }
-    .alert-danger { background: #f8d7da; color: #721c24; padding: 10px; border-radius: 4px; margin-bottom: 15px; }
+    .btn-primary { background: 
+    .btn-secondary { background: 
+    .alert-danger { background: 
 </style>
 
 <div class="container">

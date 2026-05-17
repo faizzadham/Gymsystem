@@ -5,11 +5,11 @@ require_once '../connectdb.php';
 
 $pageTitle = 'Delete Payment';
 
-// Get ID from URL
+
 $id = $_GET['id'] ?? 0;
 
-// Fetch payment and member name for confirmation
-// FIXED: Changed py.user_id to py.member_id and m.user_id to m.member_id
+
+
 $stmt = $conn->prepare("SELECT py.*, m.full_name FROM payments py JOIN members m ON py.member_id = m.member_id WHERE py.payment_id = ?");
 
 if ($stmt === false) {
@@ -21,7 +21,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 $pay = $result->fetch_assoc();
 
-// Redirect if payment not found
+
 if (!$pay) { 
     header("Location: payments.php"); 
     exit(); 
@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <title>Delete Payment</title>
     <style>
-        body { font-family: sans-serif; background: #f4f7f6; padding: 20px; }
+        body { font-family: sans-serif; background: 
         .confirm-box { 
             max-width: 500px; 
             margin: 80px auto; 
@@ -55,12 +55,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
             text-align: center; 
         }
-        h2 { color: #e74c3c; margin-top: 0; }
-        p { font-size: 1.1rem; color: #333; margin-bottom: 30px; line-height: 1.6; }
+        h2 { color: 
+        p { font-size: 1.1rem; color: 
         .btn { padding: 12px 25px; border: none; border-radius: 4px; cursor: pointer; color: white; text-decoration: none; display: inline-block; font-weight: bold; }
-        .btn-danger { background: #e74c3c; }
-        .btn-secondary { background: #95a5a6; margin-left: 10px; }
-        .amount-tag { color: #2c3e50; font-weight: bold; border-bottom: 2px solid #e74c3c; }
+        .btn-danger { background: 
+        .btn-secondary { background: 
+        .amount-tag { color: 
     </style>
 </head>
 <body>

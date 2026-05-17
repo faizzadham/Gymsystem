@@ -43,7 +43,7 @@ body {
     z-index: 2;
 }
 
-/* --- FIXED HEADER --- */
+
 .page-header {
     background: linear-gradient(
         135deg,
@@ -55,7 +55,7 @@ body {
     padding: 4.5rem 1.5rem 6.5rem;
     position: relative;
     overflow: hidden;
-    /* Added flex properties to ensure content always remains perfectly centered and stacked vertically */
+    
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -71,7 +71,7 @@ body {
     border-radius: 50%;
     top: -180px;
     right: -100px;
-    pointer-events: none; /* Prevents the circle overlay from interfering with header clicks */
+    pointer-events: none; 
 }
 
 .page-header h1 {
@@ -216,14 +216,14 @@ body {
 }
 
 
-/* --- FIXED FOOTER --- */
+
 .trainer-card-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-top: auto;
     gap: 1rem;
-    width: 100%; /* Ensures footer utilizes full width of the card context */
+    width: 100%; 
     box-sizing: border-box;
 }
 
@@ -238,7 +238,7 @@ body {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    flex-shrink: 0; /* Prevents text from squishing or clipping on smaller screens */
+    flex-shrink: 0; 
 }
 
 .badge-success {

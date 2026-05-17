@@ -1,20 +1,20 @@
 <?php
 session_start();
 
-// Base URL for app links and redirects
+
 $baseUrl = '/Gymsystem';
 
-// Check if user is logged in
+
 function isLoggedIn() {
     return isset($_SESSION['user_id']);
 }
 
-// Get current user role
+
 function getUserRole() {
     return $_SESSION['role'] ?? null;
 }
 
-// Require login - redirect if not logged in
+
 function requireLogin() {
     global $baseUrl;
     if (!isLoggedIn()) {
@@ -23,7 +23,7 @@ function requireLogin() {
     }
 }
 
-// Require admin role
+
 function requireAdmin() {
     global $baseUrl;
     requireLogin();
@@ -33,7 +33,7 @@ function requireAdmin() {
     }
 }
 
-// Require member role
+
 function requireMember() {
     global $baseUrl;
     requireLogin();
@@ -43,7 +43,7 @@ function requireMember() {
     }
 }
 
-// Check remember me cookie on page load
+
 function checkRememberMe() {
     if (!isLoggedIn() && isset($_COOKIE['remember_user'])) {
         require_once __DIR__ . '/connectdb.php';

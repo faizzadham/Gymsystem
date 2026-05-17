@@ -5,7 +5,7 @@ require_once '../connectdb.php';
 
 $pageTitle = 'Edit Booking';
 
-// 1. Validate ID and Fetch Existing Data
+
 $bookingId = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT) ?? 0;
 
 $stmt = $conn->prepare("SELECT * FROM session_bookings WHERE booking_id = ?");
@@ -19,7 +19,7 @@ if (!$booking) {
     exit();
 }
 
-// 2. Fetch Dropdown Data
+
 $members = [];
 $membersResult = $conn->query("SELECT member_id, full_name FROM members ORDER BY full_name");
 if ($membersResult) {
@@ -40,7 +40,7 @@ if ($trainersResult) {
 
 $errors = [];
 
-// 3. Handle Form Submission
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $memberId  = filter_input(INPUT_POST, 'member_id', FILTER_VALIDATE_INT);
     $trainerId = filter_input(INPUT_POST, 'trainer_id', FILTER_VALIDATE_INT);
@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-require_once '../header.php'; // Adjusted based on your likely header path
+require_once '../header.php'; 
 ?>
 
 <div class="admin-layout">

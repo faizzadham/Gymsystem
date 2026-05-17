@@ -5,19 +5,19 @@ require_once '../connectdb.php';
 
 $pageTitle = 'Payment Management';
 
-// 1. Handle Form Submission (Record New Payment)
+
 $errors = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_payment'])) {
     $memberId = (int)($_POST['member_id'] ?? 0);
-    $paymentDate = date('Y-m-d'); // Current date
+    $paymentDate = date('Y-m-d'); 
     $amount = (float)($_POST['amount'] ?? 0);
     $method = $_POST['payment_method'] ?? 'Cash';
-    $status = 'Paid'; // Default status for quick add
+    $status = 'Paid'; 
 
     if ($memberId <= 0 || $amount <= 0) {
         $errors[] = 'Please select a member and enter a valid amount.';
     } else {
-        // FIXED: Using member_id to match image_775416.png
+        
         $stmt = $conn->prepare("INSERT INTO payments (member_id, payment_date, amount, payment_method, payment_status) VALUES (?, ?, ?, ?, ?)");
         $stmt->bind_param("isdss", $memberId, $paymentDate, $amount, $method, $status);
         
@@ -30,12 +30,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_payment'])) {
     }
 }
 
-// 2. Fetch Members for the Dropdown
+
 $memberQuery = $conn->query("SELECT member_id, full_name FROM members ORDER BY full_name");
 $members = ($memberQuery) ? $memberQuery->fetch_all(MYSQLI_ASSOC) : [];
 
-// 3. Fetch Transaction History
-// FIXED: JOIN on member_id to ensure history displays correctly
+
+
 $historyQuery = "SELECT py.*, m.full_name 
                  FROM payments py 
                  JOIN members m ON py.member_id = m.member_id 
@@ -50,34 +50,34 @@ $history = ($historyResult) ? $historyResult->fetch_all(MYSQLI_ASSOC) : [];
     <meta charset="UTF-8">
     <title><?php echo $pageTitle; ?></title>
     <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; background: #f4f7f6; padding: 20px; color: #333; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: 
         .container { max-width: 1000px; margin: auto; }
         .card { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 30px; }
         h1 { margin-bottom: 25px; font-size: 28px; }
         h2 { font-size: 18px; margin-top: 0; margin-bottom: 20px; }
         
-        /* Form Layout */
+        
         .payment-form { display: flex; gap: 15px; align-items: flex-end; flex-wrap: wrap; }
         .form-group { flex: 1; min-width: 200px; }
         label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 14px; }
-        select, input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
+        select, input { width: 100%; padding: 10px; border: 1px solid 
         
-        .btn-save { background: #27ae60; color: white; padding: 11px 20px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
-        .btn-save:hover { background: #219150; }
+        .btn-save { background: 
+        .btn-save:hover { background: 
 
-        /* Table Design */
+        
         table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th { background: #34495e; color: white; text-align: left; padding: 12px; }
-        td { padding: 12px; border-bottom: 1px solid #eee; }
-        tr:hover { background: #f9f9f9; }
+        th { background: 
+        td { padding: 12px; border-bottom: 1px solid 
+        tr:hover { background: 
         
         .status-badge { padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; }
-        .status-paid { background: #d4edda; color: #155724; }
+        .status-paid { background: 
         
         .actions a { text-decoration: none; margin-right: 10px; font-size: 14px; }
-        .edit { color: #3498db; }
-        .delete { color: #e74c3c; }
-        .empty-msg { text-align: center; color: #7f8c8d; padding: 20px; }
+        .edit { color: 
+        .delete { color: 
+        .empty-msg { text-align: center; color: 
     </style>
 </head>
 <body>

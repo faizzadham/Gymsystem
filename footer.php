@@ -40,7 +40,7 @@
         </div>
     </footer>
     <script>
-        // Mobile nav toggle
+        
         const navToggle = document.getElementById('navToggle');
         const navMenu = document.getElementById('navMenu');
         if (navToggle) {

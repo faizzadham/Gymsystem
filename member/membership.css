@@ -1,7 +1,4 @@
-/* ==========================================================================
-<<<<<<< Updated upstream
-   FitZone Layout & Centering Master Engine
-   ========================================================================== */
+
 
 :root {
     --brand-blue: #1a62ff;
@@ -27,9 +24,7 @@ body {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
-/* ==========================================================================
-   REAL NAVBAR FIXES (Forces horizontal styling)
-   ========================================================================== */
+
 .navbar {
     background-color: #ffffff !important;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important;
@@ -49,7 +44,7 @@ body {
     box-sizing: border-box !important;
 }
 
-/* Logo Fixes */
+
 .nav-logo {
     font-size: 1.4rem !important;
     font-weight: 700 !important;
@@ -60,12 +55,12 @@ body {
     gap: 0.6rem !important;
 }
 
-/* Hides mobile responsive toggle hamburger if not using JS */
+
 .nav-toggle {
     display: none !important;
 }
 
-/* Horizontally aligns the menu items */
+
 .nav-menu {
     list-style: none !important;
     margin: 0 !important;
@@ -75,7 +70,7 @@ body {
     gap: 1rem !important;
 }
 
-/* Menu Links to Buttons styling */
+
 .nav-menu li a {
     color: #475569 !important;
     text-decoration: none !important;
@@ -94,7 +89,7 @@ body {
     background-color: #f1f5f9 !important;
 }
 
-/* Logout button override */
+
 .nav-menu li a.btn-logout {
     color: #ef4444 !important;
 }
@@ -104,9 +99,7 @@ body {
     color: #b91c1c !important;
 }
 
-/* ==========================================================================
-   APP CONTAINER & CENTERING STYLES
-   ========================================================================== */
+
 .container.fade-in {
     width: 100% !important;
     margin: 0 auto !important;
@@ -246,9 +239,7 @@ body {
     padding: 0;
 }
 
-/* ==========================================================================
-   Layout Containers & Headers
-   ========================================================================== */
+
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -276,7 +267,7 @@ body {
     font-size: 1rem;
 }
 
-/* Animation */
+
 .fade-in {
     animation: fadeIn 0.4s ease-out forwards;
 }
@@ -286,9 +277,7 @@ body {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* ==========================================================================
-   Cards & Component UI
-   ========================================================================== */
+
 .card {
     background: var(--bg-container);
     border: 1px solid var(--border-color);
@@ -311,7 +300,7 @@ body {
     margin: 0 0 0.25rem 0;
 }
 
-/* Grids */
+
 .stats-grid {
     display: grid;
     gap: 1.25rem;
@@ -322,7 +311,7 @@ body {
     gap: 1rem;
 }
 
-/* Specific PHP Embedded Classes */
+
 .text-label {
     color: var(--text-muted);
     font-size: 0.85rem;
@@ -361,9 +350,7 @@ body {
     margin: 0;
 }
 
-/* ==========================================================================
-   Alerts & Badges
-   ========================================================================== */
+
 .alert {
     padding: 1rem;
     border-radius: var(--radius);
@@ -401,9 +388,7 @@ body {
     color: var(--danger-color);
 }
 
-/* ==========================================================================
-   Buttons
-   ========================================================================== */
+
 .btn {
     display: inline-flex;
     align-items: center;
@@ -436,9 +421,7 @@ body {
     transform: scale(0.98);
 }
 
-/* ==========================================================================
-   Responsive Adaptations
-   ========================================================================== */
+
 @media (max-width: 480px) {
     .package-item {
         flex-direction: column;

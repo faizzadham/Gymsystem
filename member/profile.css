@@ -113,7 +113,7 @@ textarea {
     min-height: 120px;
 }
 
-/* Focus States */
+
 input:focus,
 textarea:focus,
 select:focus {
@@ -123,7 +123,7 @@ select:focus {
         0 0 0 3px rgba(59, 130, 246, 0.15);
 }
 
-/* Disabled Inputs */
+
 input:disabled,
 textarea:disabled,
 select:disabled {
@@ -198,7 +198,7 @@ select:disabled {
     text-decoration: none;
 }
 
-/* Primary Button */
+
 .btn-primary {
     background-color: var(--primary-color);
     color: #ffffff;
@@ -213,7 +213,7 @@ select:disabled {
     transform: translateY(1px);
 }
 
-/* Secondary Button */
+
 .btn-secondary {
     background-color: #f1f5f9;
     color: var(--text-main);
@@ -238,14 +238,14 @@ select:disabled {
     font-size: 1rem;
 }
 
-/* Success Alert */
+
 .alert-success {
     background-color: var(--success-bg);
     color: var(--success-color);
     border: 1px solid rgba(16, 185, 129, 0.2);
 }
 
-/* Error Alert */
+
 .alert-danger {
     background-color: var(--danger-bg);
     color: var(--danger-color);

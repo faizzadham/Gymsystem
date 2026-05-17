@@ -4,7 +4,7 @@ requireAdmin();
 require_once '../connectdb.php';
 $pageTitle = 'Reports';
 
-// Monthly Income
+
 $monthlyIncomeResult = $conn->query("SELECT COALESCE(SUM(amount), 0) FROM payments WHERE payment_status = 'Paid' AND MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())");
 $monthlyIncome = $monthlyIncomeResult ? ($monthlyIncomeResult->fetch_row()[0] ?? 0) : 0;
 $totalIncomeResult = $conn->query("SELECT COALESCE(SUM(amount), 0) FROM payments WHERE payment_status = 'Paid'");
@@ -12,15 +12,15 @@ $totalIncome = $totalIncomeResult ? ($totalIncomeResult->fetch_row()[0] ?? 0) : 
 $totalPaymentsResult = $conn->query("SELECT COUNT(*) FROM payments WHERE payment_status = 'Paid' AND MONTH(payment_date) = MONTH(CURDATE()) AND YEAR(payment_date) = YEAR(CURDATE())");
 $totalPayments = $totalPaymentsResult ? ($totalPaymentsResult->fetch_row()[0] ?? 0) : 0;
 
-// Active Members
+
 $activeMembersResult = $conn->query("SELECT m.full_name, m.email, m.phone, p.package_name, m.expiry_date FROM members m LEFT JOIN membership_packages p ON m.package_id = p.package_id WHERE m.status = 'active' ORDER BY m.full_name");
 $activeMembers = $activeMembersResult ? $activeMembersResult->fetch_all(MYSQLI_ASSOC) : [];
 
-// Expired Members
+
 $expiredMembersResult = $conn->query("SELECT m.full_name, m.email, m.phone, p.package_name, m.expiry_date FROM members m LEFT JOIN membership_packages p ON m.package_id = p.package_id WHERE m.status = 'expired' ORDER BY m.full_name");
 $expiredMembers = $expiredMembersResult ? $expiredMembersResult->fetch_all(MYSQLI_ASSOC) : [];
 
-// PT Monthly Sessions
+
 $monthlySessionsResult = $conn->query("SELECT COUNT(*) FROM session_bookings WHERE MONTH(session_date) = MONTH(CURDATE()) AND YEAR(session_date) = YEAR(CURDATE())");
 $monthlySessions = $monthlySessionsResult ? ($monthlySessionsResult->fetch_row()[0] ?? 0) : 0;
 $approvedSessionsResult = $conn->query("SELECT COUNT(*) FROM session_bookings WHERE booking_status IN ('Approved','Completed') AND MONTH(session_date) = MONTH(CURDATE()) AND YEAR(session_date) = YEAR(CURDATE())");
@@ -30,7 +30,7 @@ $monthlyPTRevenue = $monthlyPTRevenueResult ? ($monthlyPTRevenueResult->fetch_ro
 $totalPTRevenueResult = $conn->query("SELECT COALESCE(SUM(t.session_fee), 0) FROM session_bookings sb JOIN trainers t ON sb.trainer_id = t.trainer_id WHERE sb.booking_status IN ('Approved','Completed')");
 $totalPTRevenue = $totalPTRevenueResult ? ($totalPTRevenueResult->fetch_row()[0] ?? 0) : 0;
 
-// Trainer Performance
+
 $trainerPerformanceResult = $conn->query("SELECT t.trainer_name, t.specialization, t.session_fee, COUNT(sb.booking_id) as total_sessions, COALESCE(SUM(CASE WHEN sb.booking_status IN ('Approved','Completed') THEN t.session_fee ELSE 0 END), 0) as revenue FROM trainers t LEFT JOIN session_bookings sb ON t.trainer_id = sb.trainer_id GROUP BY t.trainer_id ORDER BY total_sessions DESC");
 $trainerPerformance = $trainerPerformanceResult ? $trainerPerformanceResult->fetch_all(MYSQLI_ASSOC) : [];
 

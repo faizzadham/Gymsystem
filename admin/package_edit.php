@@ -5,17 +5,17 @@ require_once '../connectdb.php';
 
 $pageTitle = 'Edit Package';
 
-// Get ID from URL
+
 $id = $_GET['id'] ?? 0;
 
-// Fetch current package details
+
 $stmt = $conn->prepare("SELECT * FROM membership_packages WHERE package_id = ?");
 $stmt->bind_param("i", $id);
 $stmt->execute();
 $result = $stmt->get_result();
 $pkg = $result->fetch_assoc();
 
-// If the package doesn't exist, redirect back
+
 if (!$pkg) {
     header("Location: packages.php");
     exit();
@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($name) || $duration <= 0 || $price <= 0) {
         $errors[] = 'All fields are required and must have valid values.';
     } else {
-        // Update the package using MySQLi
+        
         $updateStmt = $conn->prepare("UPDATE membership_packages SET package_name = ?, duration = ?, price = ? WHERE package_id = ?");
         $updateStmt->bind_param("sidi", $name, $duration, $price, $id);
         
@@ -46,15 +46,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 <style>
-    body { font-family: sans-serif; background: #f4f7f6; padding: 20px; }
+    body { font-family: sans-serif; background: 
     .card { max-width: 500px; margin: auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
     .form-group { margin-bottom: 15px; }
     label { display: block; margin-bottom: 5px; font-weight: bold; }
-    input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+    input { width: 100%; padding: 10px; border: 1px solid 
     .btn { padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; color: white; text-decoration: none; display: inline-block; }
-    .btn-primary { background: #3498db; }
-    .btn-secondary { background: #95a5a6; }
-    .alert-danger { background: #f8d7da; color: #721c24; padding: 10px; border-radius: 4px; margin-bottom: 15px; }
+    .btn-primary { background: 
+    .btn-secondary { background: 
+    .alert-danger { background: 
 </style>
 
 <div class="admin-layout">

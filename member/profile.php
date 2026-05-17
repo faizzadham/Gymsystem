@@ -8,7 +8,7 @@ $userId = $_SESSION['user_id'];
 $success = '';
 $errors = [];
 
-/*** Fetch fresh member data*/
+
 $fetchMember = function($db, $uid) {
     $stmt = $db->prepare("SELECT * FROM members WHERE user_id = ?");
     $stmt->bind_param("i", $uid);
@@ -25,7 +25,7 @@ if (!$member) {
     $member = [];
 }
 
-// Handle Form Submission
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fullName = trim($_POST['full_name'] ?? '');
     $email    = trim($_POST['email'] ?? '');
@@ -40,13 +40,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         try {
             mysqli_begin_transaction($conn);
 
-            // 1. Update members table
+            
             $updMem = $conn->prepare("UPDATE members SET full_name = ?, email = ?, phone = ?, gender = ? WHERE member_id = ?");
             $updMem->bind_param("ssssi", $fullName, $email, $phone, $gender, $member['member_id']);
             $updMem->execute();
             $updMem->close();
 
-            // 2. Sync email to users table
+            
             $updUsr = $conn->prepare("UPDATE users SET email = ? WHERE user_id = ?");
             $updUsr->bind_param("si", $email, $userId);
             $updUsr->execute();
@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             mysqli_commit($conn);
             
             $success = 'Profile updated successfully!';
-            $member = $fetchMember($conn, $userId); // Refresh local data
+            $member = $fetchMember($conn, $userId); 
         } catch (Exception $e) {
             mysqli_rollback($conn);
             $errors[] = 'An error occurred while saving: ' . $e->getMessage();

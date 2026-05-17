@@ -6,7 +6,7 @@ require_once '../connectdb.php';
 $pageTitle = 'Payment History';
 $userId = $_SESSION['user_id'];
 
-// Fetch payments using a JOIN to handle everything in one trip to the DB
+
 $query = "SELECT p.* FROM payments p 
           JOIN members m ON p.member_id = m.member_id 
           WHERE m.user_id = ? 
@@ -27,7 +27,7 @@ function getStatusClass($status) {
     };
 }
 
-// 1. The Header loads FIRST with its own styles
+
 require_once '../header.php';
 ?>
 
@@ -45,7 +45,7 @@ require_once '../header.php';
             <table>
                 <thead>
                     <tr>
-                        <th style="width: 8%;">#</th>
+                        <th style="width: 8%;">
                         <th style="width: 27%;">Date</th>
                         <th style="width: 25%;">Amount (RM)</th>
                         <th style="width: 23%;">Method</th>

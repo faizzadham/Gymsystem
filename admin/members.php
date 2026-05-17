@@ -5,7 +5,7 @@ require_once '../connectdb.php';
 
 $pageTitle = 'Manage Members';
 
-// Fetch all members with their package names using a LEFT JOIN
+
 $sql = "SELECT m.*, p.package_name 
         FROM members m 
         LEFT JOIN membership_packages p ON m.package_id = p.package_id 
@@ -14,30 +14,30 @@ $sql = "SELECT m.*, p.package_name
 $result = $conn->query($sql);
 $members = ($result) ? $result->fetch_all(MYSQLI_ASSOC) : [];
 
-// Comment these out if you haven't created the header/footer files yet
-// require_once '../header.php'; 
+
+
 ?>
 
 <style>
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f7f6; padding: 20px; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: 
     .container { max-width: 1100px; margin: auto; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
     .flex-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
     
     table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-    th { background: #2c3e50; color: white; padding: 12px; text-align: left; }
-    td { padding: 12px; border-bottom: 1px solid #eee; }
-    tr:hover { background-color: #f9f9f9; }
+    th { background: 
+    td { padding: 12px; border-bottom: 1px solid 
+    tr:hover { background-color: 
 
     .btn { padding: 8px 15px; border-radius: 5px; text-decoration: none; color: white; font-size: 14px; display: inline-block; }
-    .btn-add { background: #2ecc71; margin-bottom: 15px; }
-    .btn-edit { background: #3498db; margin-right: 5px; }
-    .btn-delete { background: #e74c3c; }
+    .btn-add { background: 
+    .btn-edit { background: 
+    .btn-delete { background: 
     
     .badge { padding: 5px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; text-transform: uppercase; }
-    .badge-active { background: #d4edda; color: #155724; }
-    .badge-expired { background: #f8d7da; color: #721c24; }
+    .badge-active { background: 
+    .badge-expired { background: 
     
-    .msg { padding: 10px; background: #d1ecf1; color: #0c5460; border-radius: 5px; margin-bottom: 15px; }
+    .msg { padding: 10px; background: 
 </style>
 
 <div class="container">
@@ -99,4 +99,4 @@ $members = ($result) ? $result->fetch_all(MYSQLI_ASSOC) : [];
     </div>
 </div>
 
-<?php // require_once '../footer.php'; ?>
+<?php 
