@@ -1,31 +1,29 @@
 <?php
-include("connectdb.php");
-include("auth.php");
+require_once 'auth.php';
+
+$pageTitle = 'Home';
+$pageStyles = ['homepage.css'];
+require_once 'header.php';
 ?>
-
-<link rel="stylesheet" href="homepage.css">
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 <section class="hero">
     <div class="hero-content">
-        <h1>Tranform Your Body, Transform Your life</h1>
-        <p> Join FitZone Gym and start your fitness journey today. Professional equipment, expert trainers, and a supportive community await you. </P>
+        <h1>Transform Your Body, Transform Your Life</h1>
+        <p>Join FitZone Gym and start your fitness journey today. Professional equipment, expert trainers, and a supportive community await you.</p>
         <div class="hero-buttons">
             <?php if (!isLoggedIn()): ?>
-                <a href="register.php" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i>
-                Get Started</a>
-                 <a href="login.php" class="btn btn-secondary"><i class="fas fa-sign-in alt"></i>Member Login</a>
-                 <?php else:
-                 if (getUserRole() === 'admin'): ?>
-                 <a href="admin/dashboard.php" class="btn btn-primary"><i class="fas fa-tachometer-alt"></i>Go to Dashboard</a>
-                 <?php else: ?>
-                 <a href="member/dashboard.php" class="btn btn-primary"><i class="fas fa-tachmometer-alt"><i> My Dashboard</a>
-                 <?php endif; ?>
-                 <?php endif; ?>
+                <a href="register.php" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> Get Started</a>
+                <a href="login.php" class="btn btn-secondary"><i class="fas fa-sign-in-alt"></i> Member Login</a>
+            <?php else: ?>
+                <?php if (getUserRole() === 'admin'): ?>
+                    <a href="admin/dashboard.php" class="btn btn-primary"><i class="fas fa-tachometer-alt"></i> Go to Dashboard</a>
+                <?php else: ?>
+                    <a href="member/dashboard.php" class="btn btn-primary"><i class="fas fa-tachometer-alt"></i> My Dashboard</a>
+                <?php endif; ?>
+            <?php endif; ?>
         </div>
-                 </div>
-                 </section>
+    </div>
+</section>
 
-<?php include("footer.php"); ?>
+<?php require_once 'footer.php'; ?>
 

@@ -103,7 +103,7 @@ require_once '../header.php';
     </div>
 
     <div class="card" style="max-width: 600px;">
-        <h3>Renew / Change Package</h3>
+        <h3>Change Package</h3>
         <div class="features-grid">
             <?php foreach ($packages as $p): ?>
                 <div class="package-item">

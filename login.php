@@ -1,9 +1,11 @@
 <?php
-session_start(); // Start the session at the very beginning
-include("connectdb.php");
+require_once 'auth.php';
+require_once 'connectdb.php';
 
 $pageTitle = 'Login';
+$pageStyles = ['login.css?v=1.4'];
 $error = '';
+require_once 'header.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = htmlspecialchars($_POST['username'] ?? '');
@@ -47,18 +49,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $pageTitle; ?> | FitZone</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="login.css?v=1.4">
-</head>
-<body>
-
 <section class="hero">
     <h1>Welcome Back to FitZone</h1>
 </section>
@@ -97,5 +87,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 </div>
 
-</body>
-</html>
+<?php require_once 'footer.php'; ?>
