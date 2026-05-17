@@ -81,3 +81,151 @@ body {
     background-color: rgba(255, 255, 255, 0.1);
     transform: translateY(-2px);
 }
+
+/* ==========================================================================
+   PROFESSIONAL FOOTER STYLES
+   ========================================================================== */
+
+/* Main Footer Background and Base Styling */
+.footer {
+    background-color: #111827; /* Deep, modern dark gray */
+    color: #9ca3af; /* Clean, easy-to-read muted text color */
+    padding: 60px 0 20px 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Centers the content nicely on large screens */
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Grid layout to line up your 4 columns side-by-side */
+.footer-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+/* Individual column sizing */
+.footer-col {
+    flex: 1;
+    min-width: 220px; /* Prevents columns from getting too squished on smaller screens */
+}
+
+/* Brand Logo Layout (Column 1) */
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.footer-logo i {
+    color: #3b82f6; /* Accent blue for the dumbbell icon */
+}
+
+.footer-col p {
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+/* Column Headings (Quick Links, Contact Info, etc.) */
+.footer-col h4 {
+    color: #ffffff;
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+/* Visual underline decoration beneath headers */
+.footer-col h4::after {
+    content: '';
+    display: block;
+    width: 35px;
+    height: 2px;
+    background-color: #3b82f6; /* Matching accent blue */
+    margin-top: 8px;
+}
+
+/* List Formatting - removes ugly default bullets and padding */
+.footer-col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-col ul li {
+    margin-bottom: 12px;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Text links */
+.footer-col ul li a {
+    color: #9ca3af;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+/* Smooth color transition and hover effect */
+.footer-col ul li a:hover {
+    color: #ffffff;
+    padding-left: 4px; 
+}
+
+/* Dynamic styling for Contact Info Icons */
+.footer-col ul li i {
+    color: #3b82f6;
+    width: 16px;
+    text-align: center;
+}
+
+/* Social Media Button Wrap */
+.social-links {
+    display: flex;
+    gap: 12px;
+    margin-top: 5px;
+}
+
+/* Circular Social Icons */
+.social-links a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    background-color: #1f2937; /* Slightly lighter gray background */
+    color: #ffffff;
+    border-radius: 50%;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+/* Hover state turns buttons to branding blue and shifts upwards slightly */
+.social-links a:hover {
+    background-color: #3b82f6;
+    transform: translateY(-3px);
+}
+
+/* Bottom Copyright Bar */
+.footer-bottom {
+    margin-top: 50px;
+    padding-top: 25px;
+    border-top: 1px solid #1f2937; /* Clean dividing layout line */
+    text-align: center;
+    font-size: 0.85rem;
+}
+
+.footer-bottom p {
+    margin: 0;
+}
