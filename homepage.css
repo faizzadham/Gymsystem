@@ -1,11 +1,11 @@
-
+/* General Setup */
 body {
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f4f7f9;
 }
 
-
+/* Hero Section Container */
 .hero {
     background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
     height: 80vh;
@@ -21,7 +21,7 @@ body {
     max-width: 800px;
 }
 
-
+/* Typography */
 .hero h1 {
     font-size: 3rem;
     margin-bottom: 20px;
@@ -37,7 +37,7 @@ body {
     opacity: 0.9;
 }
 
-
+/* Button Container */
 .hero-buttons {
     display: flex;
     gap: 15px;
@@ -45,7 +45,7 @@ body {
     flex-wrap: wrap;
 }
 
-
+/* Common Button Styles */
 .btn {
     padding: 12px 30px;
     border-radius: 5px;
@@ -58,7 +58,7 @@ body {
     gap: 10px;
 }
 
-
+/* Primary Button (White) */
 .btn-primary {
     background-color: #ffffff;
     color: #1e3a8a;
@@ -70,7 +70,7 @@ body {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-
+/* Secondary Button (Transparent/Outline) */
 .btn-secondary {
     background-color: transparent;
     color: #ffffff;
@@ -82,24 +82,26 @@ body {
     transform: translateY(-2px);
 }
 
+/* ==========================================================================
+   PROFESSIONAL FOOTER STYLES
+   ========================================================================== */
 
-
-
+/* Main Footer Background and Base Styling */
 .footer {
-    background-color: #111827; 
-    color: #9ca3af; 
+    background-color: #111827; /* Deep, modern dark gray */
+    color: #9ca3af; /* Clean, easy-to-read muted text color */
     padding: 60px 0 20px 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-
+/* Centers the content nicely on large screens */
 .footer-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
 }
 
-
+/* Grid layout to line up your 4 columns side-by-side */
 .footer-grid {
     display: flex;
     flex-wrap: wrap;
@@ -107,13 +109,13 @@ body {
     gap: 40px;
 }
 
-
+/* Individual column sizing */
 .footer-col {
     flex: 1;
-    min-width: 220px; 
+    min-width: 220px; /* Prevents columns from getting too squished on smaller screens */
 }
 
-
+/* Brand Logo Layout (Column 1) */
 .footer-logo {
     display: flex;
     align-items: center;
@@ -125,7 +127,7 @@ body {
 }
 
 .footer-logo i {
-    color: #3b82f6; 
+    color: #3b82f6; /* Accent blue for the dumbbell icon */
 }
 
 .footer-col p {
@@ -133,7 +135,7 @@ body {
     font-size: 0.95rem;
 }
 
-
+/* Column Headings (Quick Links, Contact Info, etc.) */
 .footer-col h4 {
     color: #ffffff;
     font-size: 1.15rem;
@@ -143,17 +145,17 @@ body {
     position: relative;
 }
 
-
+/* Visual underline decoration beneath headers */
 .footer-col h4::after {
     content: '';
     display: block;
     width: 35px;
     height: 2px;
-    background-color: #3b82f6; 
+    background-color: #3b82f6; /* Matching accent blue */
     margin-top: 8px;
 }
 
-
+/* List Formatting - removes ugly default bullets and padding */
 .footer-col ul {
     list-style: none;
     padding: 0;
@@ -168,58 +170,58 @@ body {
     gap: 10px;
 }
 
-
+/* Text links */
 .footer-col ul li a {
     color: #9ca3af;
     text-decoration: none;
     transition: all 0.2s ease;
 }
 
-
+/* Smooth color transition and hover effect */
 .footer-col ul li a:hover {
     color: #ffffff;
     padding-left: 4px; 
 }
 
-
+/* Dynamic styling for Contact Info Icons */
 .footer-col ul li i {
     color: #3b82f6;
     width: 16px;
     text-align: center;
 }
 
-
+/* Social Media Button Wrap */
 .social-links {
     display: flex;
     gap: 12px;
     margin-top: 5px;
 }
 
-
+/* Circular Social Icons */
 .social-links a {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     width: 38px;
     height: 38px;
-    background-color: #1f2937; 
+    background-color: #1f2937; /* Slightly lighter gray background */
     color: #ffffff;
     border-radius: 50%;
     text-decoration: none;
     transition: all 0.3s ease;
 }
 
-
+/* Hover state turns buttons to branding blue and shifts upwards slightly */
 .social-links a:hover {
     background-color: #3b82f6;
     transform: translateY(-3px);
 }
 
-
+/* Bottom Copyright Bar */
 .footer-bottom {
     margin-top: 50px;
     padding-top: 25px;
-    border-top: 1px solid #1f2937; 
+    border-top: 1px solid #1f2937; /* Clean dividing layout line */
     text-align: center;
     font-size: 0.85rem;
 }

@@ -5,7 +5,7 @@ require_once '../connectdb.php';
 
 $pageTitle = 'Add Member';
 
-
+// Fetch packages using MySQLi
 $packagesResult = $conn->query("SELECT * FROM membership_packages");
 $packages = $packagesResult ? $packagesResult->fetch_all(MYSQLI_ASSOC) : [];
 
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (empty($errors)) {
-        
+        // Check if username or email exists
         $stmt = $conn->prepare("SELECT user_id FROM users WHERE username = ? OR email = ?");
         $stmt->bind_param("ss", $username, $email);
         $stmt->execute();
@@ -35,19 +35,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($stmt->num_rows > 0) {
             $errors[] = 'Username or email already exists.';
         } else {
-            
+            // Start Transaction
             $conn->begin_transaction();
 
             try {
                 $hashedPass = password_hash($password, PASSWORD_DEFAULT);
                 
-                
+                // 1. Insert into Users table
                 $stmt = $conn->prepare("INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, 'member')");
                 $stmt->bind_param("sss", $username, $email, $hashedPass);
                 $stmt->execute();
                 $userId = $conn->insert_id;
 
-                
+                // 2. Calculate Expiry Date
                 $expiryDate = null;
                 if (!empty($packageId)) {
                     $pkgStmt = $conn->prepare("SELECT duration FROM membership_packages WHERE package_id = ?");
@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                 }
 
-                
+                // 3. Insert into Members table
                 $stmt = $conn->prepare("INSERT INTO members (user_id, full_name, email, phone, gender, join_date, package_id, expiry_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
                 $stmt->bind_param("isssssis", $userId, $fullName, $email, $phone, $gender, $joinDate, $packageId, $expiryDate);
                 $stmt->execute();
@@ -78,23 +78,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-
-
+// Comment these out if files don't exist yet
+// require_once '../header.php'; 
 ?>
 
 <!-- Include the CSS from your bookings page here to make it look nice -->
 <style>
-    body { font-family: sans-serif; background: 
+    body { font-family: sans-serif; background: #f4f7f6; padding: 20px; }
     .admin-content { max-width: 700px; margin: auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
     .form-group { margin-bottom: 15px; }
     label { display: block; margin-bottom: 5px; font-weight: bold; }
     input[type="text"], input[type="email"], input[type="password"], input[type="date"], select {
-        width: 100%; padding: 10px; border: 1px solid 
+        width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;
     }
     .btn { padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; color: white; text-decoration: none; display: inline-block; }
-    .btn-primary { background: 
-    .btn-secondary { background: 
-    .alert-danger { background: 
+    .btn-primary { background: #2ecc71; }
+    .btn-secondary { background: #95a5a6; }
+    .alert-danger { background: #f8d7da; color: #721c24; padding: 10px; border-radius: 4px; margin-bottom: 15px; }
 </style>
 
 <div class="admin-layout">

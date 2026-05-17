@@ -20,18 +20,18 @@ $result = $conn->query($query);
     <meta charset="UTF-8">
     <title><?php echo $pageTitle; ?></title>
     <style>
-        body { font-family: sans-serif; background: 
+        body { font-family: sans-serif; background: #f4f7f6; padding: 20px; }
         .admin-content { max-width: 1000px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        h1 { color: 
+        h1 { color: #333; border-bottom: 2px solid #eee; padding-bottom: 10px; }
         table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid 
-        th { background-color: 
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #eee; }
+        th { background-color: #f8f9fa; color: #555; }
         .btn-sm { padding: 5px 10px; text-decoration: none; border-radius: 4px; font-size: 13px; color: white; display: inline-block; margin-right: 5px; }
-        .btn-primary { background: 
-        .btn-success { background: 
-        .btn-danger { background: 
-        .status-badge { padding: 4px 8px; border-radius: 12px; font-size: 12px; background: 
-        .alert-success { padding: 10px; background: 
+        .btn-primary { background: #007bff; }
+        .btn-success { background: #28a745; }
+        .btn-danger { background: #dc3545; }
+        .status-badge { padding: 4px 8px; border-radius: 12px; font-size: 12px; background: #e9ecef; color: #495057; }
+        .alert-success { padding: 10px; background: #d4edda; color: #155724; border-radius: 4px; margin-bottom: 20px; }
     </style>
 </head>
 <body>

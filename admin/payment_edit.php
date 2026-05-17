@@ -5,11 +5,11 @@ require_once '../connectdb.php';
 
 $pageTitle = 'Edit Payment';
 
-
+// Get ID from URL
 $id = $_GET['id'] ?? 0;
 
-
-
+// Fetch current payment details and member name
+// FIXED: Changed user_id to member_id to match your database
 $stmt = $conn->prepare("SELECT py.*, m.full_name FROM payments py JOIN members m ON py.member_id = m.member_id WHERE py.payment_id = ?");
 if ($stmt === false) {
     die("SQL Prepare Error: " . $conn->error);
@@ -20,13 +20,13 @@ $stmt->execute();
 $result = $stmt->get_result();
 $pay = $result->fetch_assoc();
 
-
+// If payment record doesn't exist, redirect back
 if (!$pay) {
     header("Location: payments.php");
     exit();
 }
 
-
+// Fetch all members for the dropdown
 $memberQuery = $conn->query("SELECT member_id, full_name FROM members ORDER BY full_name");
 $members = ($memberQuery) ? $memberQuery->fetch_all(MYSQLI_ASSOC) : [];
 
@@ -42,15 +42,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($memberId <= 0 || $amount <= 0 || empty($paymentDate)) {
         $errors[] = 'All fields are required and must have valid values.';
     } else {
-        
-        
+        // Update the payment using MySQLi
+        // FIXED: Changed user_id to member_id
         $updateStmt = $conn->prepare("UPDATE payments SET member_id = ?, payment_date = ?, amount = ?, payment_method = ?, payment_status = ? WHERE payment_id = ?");
         
         if ($updateStmt === false) {
             die("SQL Update Error: " . $conn->error);
         }
 
-        
+        // "isdssi" = Int (Member), String (Date), Double (Amount), String (Method), String (Status), Int (ID)
         $updateStmt->bind_param("isdssi", $memberId, $paymentDate, $amount, $method, $status, $id);
         
         if ($updateStmt->execute()) {
@@ -68,23 +68,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <title>Edit Payment</title>
     <style>
-        body { font-family: sans-serif; background: 
+        body { font-family: sans-serif; background: #f4f7f6; padding: 20px; }
         .card { max-width: 500px; margin: auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         .form-group { margin-bottom: 15px; }
         label { display: block; margin-bottom: 5px; font-weight: bold; }
-        input, select { width: 100%; padding: 10px; border: 1px solid 
+        input, select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
         .btn { padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; color: white; text-decoration: none; display: inline-block; font-weight: bold; }
-        .btn-primary { background: 
-        .btn-secondary { background: 
-        .alert-danger { background: 
-        hr { border: 0; border-top: 1px solid 
+        .btn-primary { background: #3498db; }
+        .btn-secondary { background: #95a5a6; }
+        .alert-danger { background: #f8d7da; color: #721c24; padding: 10px; border-radius: 4px; margin-bottom: 15px; }
+        hr { border: 0; border-top: 1px solid #eee; margin: 20px 0; }
     </style>
 </head>
 <body>
 
 <div class="card">
     <h1>Edit Payment</h1>
-    <p style="color: #666;">Transaction ID: 
+    <p style="color: #666;">Transaction ID: #<?php echo $id; ?></p>
     <hr>
 
     <?php foreach ($errors as $err): ?>

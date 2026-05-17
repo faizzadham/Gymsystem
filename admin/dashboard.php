@@ -4,7 +4,7 @@ require_once '../auth.php';
 requireAdmin();
 require_once '../connectdb.php';
 
-
+// Members stats
 $result = $conn->query("SELECT COUNT(*) AS total FROM members");
 $row = $result->fetch_assoc();
 $totalMembers = $row['total'];
@@ -17,7 +17,7 @@ $result = $conn->query("SELECT COUNT(*) AS total FROM members WHERE status = 'ex
 $row = $result->fetch_assoc();
 $expiredMembers = $row['total'];
 
-
+// Monthly income
 $result = $conn->query("
     SELECT COALESCE(SUM(amount), 0) AS total
     FROM payments
@@ -29,7 +29,7 @@ $row = $result->fetch_assoc();
 $monthlyIncome = $row['total'];
 
 
-
+// PT Stats
 $result = $conn->query("SELECT COUNT(*) AS total FROM session_bookings");
 $row = $result->fetch_assoc();
 $totalPTSessions = $row['total'];
@@ -54,7 +54,7 @@ $row = $result->fetch_assoc();
 $availableTrainers = $row['total'];
 
 
-
+// Recent members
 $result = $conn->query("
     SELECT m.*, p.package_name
     FROM members m
@@ -65,7 +65,7 @@ $result = $conn->query("
 $recentMembers = $result->fetch_all(MYSQLI_ASSOC);
 
 
-
+// Recent bookings
 $result = $conn->query("
     SELECT sb.*, m.full_name, t.trainer_name
     FROM session_bookings sb

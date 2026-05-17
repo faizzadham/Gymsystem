@@ -1,7 +1,7 @@
 <?php
-require_once '../auth.php';       
+require_once '../auth.php';       // auth.php is in the parent folder
 requireAdmin();
-require_once '../connectdb.php';  
+require_once '../connectdb.php';  // Changed from db.php to connectdb.php
 
 $pageTitle = 'Confirm Deletion';
 p
@@ -12,7 +12,7 @@ if (!$bookingId) {
     exit();
 }
 
-
+// 2. Fetch booking details to show the confirmation message
 $query = "SELECT sb.*, m.full_name, t.trainer_name 
           FROM session_bookings sb 
           JOIN members m ON sb.member_id = m.member_id 
@@ -24,13 +24,13 @@ $stmt = $conn->prepare($query);
 $stmt->execute([$bookingId]);
 $booking = $stmt->fetch();
 
-
+// Redirect if the record doesn't exist
 if (!$booking) {
     header("Location: bookings.php");
     exit();
 }
 
-
+// 3. Handle the actual deletion (POST request only)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $deleteStmt = $conn->prepare("DELETE FROM session_bookings WHERE booking_id = ?");
     

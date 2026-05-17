@@ -14,10 +14,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($name) || $duration <= 0 || $price <= 0) {
         $errors[] = 'All fields are required with valid values.';
     } else {
-        
+        // MySQLi Prepared Statement
         $stmt = $conn->prepare("INSERT INTO membership_packages (package_name, duration, price) VALUES (?, ?, ?)");
         
-        
+        // "sid" means: string (name), integer (duration), double/float (price)
         $stmt->bind_param("sid", $name, $duration, $price);
         
         if ($stmt->execute()) {
@@ -29,19 +29,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-
+// Optional: require_once '../header.php'; 
 ?>
 
 <style>
-    body { font-family: sans-serif; background: 
+    body { font-family: sans-serif; background: #f4f7f6; padding: 20px; }
     .card { max-width: 500px; margin: auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
     .form-group { margin-bottom: 15px; }
     label { display: block; margin-bottom: 5px; font-weight: bold; }
-    input { width: 100%; padding: 10px; border: 1px solid 
+    input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
     .btn { padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; color: white; text-decoration: none; display: inline-block; }
-    .btn-primary { background: 
-    .btn-secondary { background: 
-    .alert-danger { background: 
+    .btn-primary { background: #2ecc71; }
+    .btn-secondary { background: #95a5a6; }
+    .alert-danger { background: #f8d7da; color: #721c24; padding: 10px; border-radius: 4px; margin-bottom: 15px; }
 </style>
 
 <div class="admin-layout">
@@ -77,4 +77,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 </div>
 
-<?php 
+<?php // Optional: require_once '../footer.php'; ?>

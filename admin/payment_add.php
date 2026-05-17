@@ -5,7 +5,7 @@ require_once '../connectdb.php';
 
 $pageTitle = 'Add Payment';
 
-
+// Fetch members for the dropdown using MySQLi
 $memberQuery = $conn->query("SELECT member_id, full_name FROM members ORDER BY full_name");
 $members = ($memberQuery) ? $memberQuery->fetch_all(MYSQLI_ASSOC) : [];
 
@@ -21,16 +21,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($memberId <= 0 || $amount <= 0) {
         $errors[] = 'Please select a member and enter a valid amount.';
     } else {
-        
+        // Corrected SQL: member_id instead of user_id to match image_775416.png
         $sql = "INSERT INTO payments (member_id, payment_date, amount, payment_method, payment_status) VALUES (?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
         
         if ($stmt === false) {
-            
+            // This captures the error shown in image_81397e.png
             die("SQL Prepare Error: " . $conn->error);
         }
 
-        
+        // Bind parameters: i = integer, s = string, d = double
         $stmt->bind_param("isdss", $memberId, $paymentDate, $amount, $method, $status);
         
         if ($stmt->execute()) {
@@ -49,20 +49,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <title><?php echo $pageTitle; ?></title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: 
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f7f6; padding: 40px; color: #333; }
         .card { max-width: 500px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
-        h1 { margin-top: 0; color: 
+        h1 { margin-top: 0; color: #2c3e50; font-size: 24px; }
         .form-group { margin-bottom: 20px; }
         label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; }
-        input, select { width: 100%; padding: 12px; border: 1px solid 
-        input:focus, select:focus { outline: none; border-color: 
+        input, select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; font-size: 15px; }
+        input:focus, select:focus { outline: none; border-color: #3498db; }
         .btn-group { margin-top: 25px; display: flex; gap: 10px; }
         .btn { padding: 12px 24px; border: none; border-radius: 6px; cursor: pointer; color: white; text-decoration: none; font-weight: bold; flex: 1; text-align: center; }
-        .btn-primary { background: 
-        .btn-primary:hover { background: 
-        .btn-secondary { background: 
-        .alert-danger { background: 
-        hr { border: 0; border-top: 1px solid 
+        .btn-primary { background: #2ecc71; }
+        .btn-primary:hover { background: #27ae60; }
+        .btn-secondary { background: #95a5a6; }
+        .alert-danger { background: #fee2e2; color: #991b1b; padding: 12px; border-radius: 6px; margin-bottom: 20px; font-size: 14px; border-left: 4px solid #ef4444; }
+        hr { border: 0; border-top: 1px solid #eee; margin-bottom: 25px; }
     </style>
 </head>
 <body>

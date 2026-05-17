@@ -15,13 +15,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($username) || empty($password)) {
         $error = 'Please fill in all fields.';
     } else {
-        
+        // Prepare the statement
         $stmt = $conn->prepare("SELECT user_id, username, password, role FROM users WHERE username = ?");
         
-        
+        // Bind the username variable
         $stmt->bind_param("s", $username);
         
-        
+        // Execute the statement
         $stmt->execute();
         
         $result = $stmt->get_result();

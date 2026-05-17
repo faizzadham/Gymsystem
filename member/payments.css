@@ -11,7 +11,7 @@
     --text-muted: #64748b;
     --border-color: #e2e8f0;
 
-    
+    /* Status Colors */
     --success-color: #10b981;
     --success-bg: #ecfdf5;
     --warning-color: #f59e0b;
@@ -52,7 +52,7 @@ body {
     justify-content: space-between;
 }
 
-
+/* Logo */
 
 .nav-logo {
     display: flex;
@@ -97,7 +97,7 @@ body {
     color: var(--primary-color);
 }
 
-
+/* Nav Buttons */
 
 .btn-nav {
     padding: 0.65rem 1rem;
@@ -136,7 +136,7 @@ body {
     box-sizing: border-box;
 }
 
-
+/* Hero Banner */
 
 .payment-hero-banner {
     background: linear-gradient(
@@ -247,7 +247,7 @@ thead th {
     border-bottom: 2px solid var(--border-color);
 }
 
-
+/* Column Widths */
 
 thead th:nth-child(1) { width: 8%; }
 thead th:nth-child(2) { width: 27%; }
@@ -274,7 +274,7 @@ tbody td {
     vertical-align: middle;
 }
 
-
+/* Important Data Styling */
 
 tbody td:nth-child(1) {
     font-weight: 600;
@@ -286,7 +286,7 @@ tbody td:nth-child(3) {
     color: var(--text-main);
 }
 
-
+/* Empty State */
 
 .no-records-cell,
 td[colspan="5"] {

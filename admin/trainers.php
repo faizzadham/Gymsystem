@@ -22,7 +22,7 @@ require_once '../header.php';
         <?php endif; ?>
         <div class="table-wrapper">
             <table>
-                <thead><tr><th>
+                <thead><tr><th>#</th><th>Name</th><th>Specialization</th><th>Available Days</th><th>Time</th><th>Contact</th><th>Fee (RM)</th><th>Status</th><th>Actions</th></tr></thead>
                 <tbody>
                     <?php if (empty($trainers)): ?>
                         <tr><td colspan="9" style="text-align:center;color:var(--text-muted);">No trainers found.</td></tr>

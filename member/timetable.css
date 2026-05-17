@@ -1,6 +1,11 @@
+/* ==========================================================================
+   TIMETABLE PAGE STYLESHEET
+   timetable.css
+   ========================================================================== */
 
-
-
+/* ==========================================================================
+   Root Variables
+   ========================================================================== */
 :root {
     --brand-blue-start: #2563eb;
     --brand-blue-end: #1d4ed8;
@@ -32,7 +37,9 @@
     --radius-sm: 8px;
 }
 
-
+/* ==========================================================================
+   Global
+   ========================================================================== */
 body {
     background: var(--bg-page);
     font-family: 'Inter', sans-serif;
@@ -60,7 +67,9 @@ body {
     }
 }
 
-
+/* ==========================================================================
+   FIXED Page Header
+   ========================================================================== */
 .page-header {
     margin-bottom: 2rem;
     display: flex;
@@ -86,7 +95,9 @@ body {
     margin: 0;
 }
 
-
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
 .btn-primary,
 .btn-secondary,
 .btn-week,
@@ -132,7 +143,9 @@ body {
     background: #f8fafc;
 }
 
-
+/* ==========================================================================
+   Alerts
+   ========================================================================== */
 .alert {
     padding: 1rem 1.25rem;
     border-radius: var(--radius-md);
@@ -146,7 +159,9 @@ body {
     border: 1px solid rgba(16, 185, 129, 0.2);
 }
 
-
+/* ==========================================================================
+   Timetable Controls
+   ========================================================================== */
 .timetable-controls {
     display: flex;
     justify-content: space-between;
@@ -190,7 +205,9 @@ body {
     font-size: 1rem;
 }
 
-
+/* ==========================================================================
+   Search Box
+   ========================================================================== */
 .trainer-search-box {
     position: relative;
     min-width: 280px;
@@ -234,7 +251,9 @@ body {
     display: block;
 }
 
-
+/* ==========================================================================
+   Legend
+   ========================================================================== */
 .calendar-legend {
     display: flex;
     gap: 1.5rem;
@@ -268,7 +287,9 @@ body {
     background: #8b5cf6;
 }
 
-
+/* ==========================================================================
+   Calendar Table
+   ========================================================================== */
 .calendar-wrapper {
     overflow-x: auto;
     background: white;
@@ -319,7 +340,9 @@ body {
     background: rgba(37, 99, 235, 0.04);
 }
 
-
+/* ==========================================================================
+   Session Cells (Inside Calendar Cells)
+   ========================================================================== */
 .session-cell {
     position: relative;
     background: rgba(16, 185, 129, 0.12);
@@ -332,7 +355,7 @@ body {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; 
+    justify-content: space-between; /* Creates an internal header/footer space within grid cells */
 }
 
 .session-cell:hover {
@@ -355,7 +378,7 @@ body {
     font-weight: 700;
     color: var(--text-primary);
     margin-bottom: 0.25rem;
-    padding-right: 24px; 
+    padding-right: 24px; /* Prevents text colliding with close button */
 }
 
 .session-type {
@@ -365,7 +388,7 @@ body {
     margin-bottom: 0.45rem;
 }
 
-
+/* --- FIXED FOOTER CONTENT (Status labels inside blocks) --- */
 .session-status {
     display: inline-block;
     padding: 0.28rem 0.65rem;
@@ -373,7 +396,7 @@ body {
     font-size: 0.72rem;
     font-weight: 700;
     text-transform: uppercase;
-    flex-shrink: 0; 
+    flex-shrink: 0; /* Prevents status labels from squeezing or text wrapping weirdly */
     white-space: nowrap;
 }
 
@@ -387,7 +410,9 @@ body {
     color: var(--warning);
 }
 
-
+/* ==========================================================================
+   Cancel Button
+   ========================================================================== */
 .session-actions {
     position: absolute;
     top: 0.45rem;
@@ -413,7 +438,9 @@ body {
     color: white;
 }
 
-
+/* ==========================================================================
+   Empty Week
+   ========================================================================== */
 .calendar-empty-week {
     margin-top: 1rem;
     background: white;
@@ -431,7 +458,9 @@ body {
     display: block;
 }
 
-
+/* ==========================================================================
+   Card Wrapper
+   ========================================================================== */
 .card {
     background: white;
     border-radius: var(--radius-lg);
@@ -453,7 +482,9 @@ body {
     margin: 0;
 }
 
-
+/* ==========================================================================
+   Badges
+   ========================================================================== */
 .badge {
     display: inline-flex;
     align-items: center;
@@ -483,7 +514,9 @@ body {
     color: var(--info);
 }
 
-
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
 @media (max-width: 992px) {
     .timetable-controls {
         flex-direction: column;

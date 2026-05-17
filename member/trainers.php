@@ -4,7 +4,7 @@ requireMember();
 require_once '../connectdb.php'; 
 $pageTitle = 'Personal Trainers';
 
-
+// Fetch all trainers ordered by name
 $query = "SELECT * FROM trainers ORDER BY trainer_name";
 $result = $conn->query($query);
 $trainers = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];

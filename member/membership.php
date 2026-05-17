@@ -25,11 +25,11 @@ $member = $getMemberData($conn, $userId) ?: [];
 $packagesResult = $conn->query("SELECT * FROM membership_packages");
 $packages = $packagesResult ? $packagesResult->fetch_all(MYSQLI_ASSOC) : [];
 
-
+// Handle Membership Renewal
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['renew_package'])) {
     $pkgId = (int)$_POST['renew_package'];
 
-    
+    // Fetch selected package details
     $pkgStmt = $conn->prepare("SELECT * FROM membership_packages WHERE package_id = ?");
     $pkgStmt->bind_param("i", $pkgId);
     $pkgStmt->execute();
@@ -40,13 +40,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['renew_package'])) {
     if ($pkgData && $member) {
         $newExpiry = date('Y-m-d', strtotime("+" . $pkgData['duration'] . " months"));
 
-        
+        // Update Member Record
         $updateStmt = $conn->prepare("UPDATE members SET package_id = ?, status = 'active', expiry_date = ? WHERE member_id = ?");
         $updateStmt->bind_param("isi", $pkgId, $newExpiry, $member['member_id']);
         $updateStmt->execute();
         $updateStmt->close();
 
-        
+        // Record Payment
         $payStmt = $conn->prepare("INSERT INTO payments (member_id, payment_date, amount, payment_method, payment_status) VALUES (?, CURDATE(), ?, 'Online', 'Paid')");
         $payStmt->bind_param("id", $member['member_id'], $pkgData['price']);
         $payStmt->execute();
@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['renew_package'])) {
 
         $success = 'Membership renewed successfully!';
 
-        
+        // Refresh member data for display
         $member = $getMemberData($conn, $userId);
     }
 }

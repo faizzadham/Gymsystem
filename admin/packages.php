@@ -5,31 +5,31 @@ require_once '../connectdb.php';
 
 $pageTitle = 'Manage Packages';
 
-
+// Fetch all packages using MySQLi
 $result = $conn->query("SELECT * FROM membership_packages ORDER BY package_id");
 $packages = ($result) ? $result->fetch_all(MYSQLI_ASSOC) : [];
 
-
-
+// If you don't have header/footer files yet, you can comment these out
+// require_once '../header.php'; 
 ?>
 
 <style>
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: 
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f7f6; padding: 20px; }
     .container { max-width: 900px; margin: auto; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
     .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
     
     table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-    th { background: 
-    td { padding: 12px; border-bottom: 1px solid 
+    th { background: #2c3e50; color: white; padding: 12px; text-align: left; }
+    td { padding: 12px; border-bottom: 1px solid #eee; }
     
     .btn { padding: 8px 15px; border-radius: 5px; text-decoration: none; color: white; font-size: 14px; display: inline-block; cursor: pointer; border: none; }
-    .btn-primary { background: 
-    .btn-secondary { background: 
-    .btn-danger { background: 
+    .btn-primary { background: #2ecc71; }
+    .btn-secondary { background: #3498db; }
+    .btn-danger { background: #e74c3c; }
     .btn-sm { padding: 5px 10px; font-size: 12px; }
     
-    .alert-success { padding: 10px; background: 
-    .text-muted { color: 
+    .alert-success { padding: 10px; background: #d4edda; color: #155724; border-radius: 5px; margin-bottom: 15px; }
+    .text-muted { color: #6c757d; }
 </style>
 
 <div class="container">
@@ -51,7 +51,7 @@ $packages = ($result) ? $result->fetch_all(MYSQLI_ASSOC) : [];
     <table>
         <thead>
             <tr>
-                <th>
+                <th>#</th>
                 <th>Package Name</th>
                 <th>Duration</th>
                 <th>Price (RM)</th>
@@ -87,4 +87,4 @@ $packages = ($result) ? $result->fetch_all(MYSQLI_ASSOC) : [];
     </div>
 </div>
 
-<?php 
+<?php // require_once '../footer.php'; ?>

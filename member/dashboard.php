@@ -6,7 +6,7 @@ require_once '../connectdb.php';
 $pageTitle = 'My Dashboard';
 $userId = $_SESSION['user_id'];
 
-
+// 1. Fetch Member & Package Info
 $memberStmt = $conn->prepare("
     SELECT m.*, p.package_name, p.price 
     FROM members m 
@@ -19,14 +19,14 @@ $memberResult = $memberStmt->get_result();
 $member = $memberResult->fetch_assoc();
 $memberStmt->close();
 
-
+// 2. Fetch Related Data (only if member exists)
 $recentPayments = [];
 $upcomingSessions = [];
 
 if ($member) {
     $memberId = $member['member_id'];
 
-    
+    // Recent Payments
     $payStmt = $conn->prepare("SELECT * FROM payments WHERE member_id = ? ORDER BY payment_date DESC LIMIT 5");
     $payStmt->bind_param("i", $memberId);
     $payStmt->execute();
@@ -34,7 +34,7 @@ if ($member) {
     $recentPayments = $payResult->fetch_all(MYSQLI_ASSOC);
     $payStmt->close();
 
-    
+    // Upcoming Sessions
     $sessStmt = $conn->prepare("
         SELECT sb.*, t.trainer_name 
         FROM session_bookings sb 
@@ -51,7 +51,7 @@ if ($member) {
     $sessStmt->close();
 }
 
-
+// 3. UI Helper Logic
 $status = ($member && isset($member['status'])) ? $member['status'] : 'inactive';
 $statusConfig = [
     'active'   => ['class' => 'green', 'icon' => 'check-circle'],
