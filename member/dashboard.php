@@ -198,8 +198,4 @@ require_once __DIR__ . '/../header.php';
     </div>
 </div>
 
-<a href="logout.php" class="logout-btn">
-    <i class="fas fa-sign-out-alt"></i> Logout
-</a>
-
 <?php require_once __DIR__ . '/../footer.php'; ?>

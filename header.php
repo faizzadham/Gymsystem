@@ -25,7 +25,6 @@
             <ul class="nav-menu" id="navMenu">
                 <li><a href="<?php echo $baseUrl; ?>/homepage.php"><i class="fas fa-home"></i> Home</a></li>
                 <li><a href="<?php echo $baseUrl; ?>/about.php"><i class="fas fa-info-circle"></i> About</a></li>
-                <li><a href="<?php echo $baseUrl; ?>/contact.php"><i class="fas fa-envelope"></i> Contact</a></li>
                 <?php if (isLoggedIn()): ?>
                     <?php if (getUserRole() === 'admin'): ?>
                         <li><a href="<?php echo $baseUrl; ?>/admin/dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>

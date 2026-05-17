@@ -20,8 +20,24 @@ if (!$booking) {
 }
 
 // 2. Fetch Dropdown Data
-$members = $conn->query("SELECT member_id, full_name FROM members ORDER BY full_name")->fetchAll();
-$trainers = $conn->query("SELECT trainer_id, trainer_name FROM trainers ORDER BY trainer_name")->fetchAll();
+$members = [];
+$membersResult = $conn->query("SELECT member_id, full_name FROM members ORDER BY full_name");
+if ($membersResult) {
+    while ($row = $membersResult->fetch_assoc()) {
+        $members[] = $row;
+    }
+    $membersResult->close();
+}
+
+$trainers = [];
+$trainersResult = $conn->query("SELECT trainer_id, trainer_name FROM trainers ORDER BY trainer_name");
+if ($trainersResult) {
+    while ($row = $trainersResult->fetch_assoc()) {
+        $trainers[] = $row;
+    }
+    $trainersResult->close();
+}
+
 $errors = [];
 
 // 3. Handle Form Submission
@@ -41,17 +57,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                       SET member_id=?, trainer_id=?, session_date=?, session_time=?, session_type=?, booking_status=?, notes=? 
                       WHERE booking_id=?";
         $updateStmt = $conn->prepare($updateSql);
-        
-        if ($updateStmt->execute([$memberId, $trainerId, $date, $time, $type, $status, $notes, $bookingId])) {
+        $updateStmt->bind_param("iisssssi", $memberId, $trainerId, $date, $time, $type, $status, $notes, $bookingId);
+
+        if ($updateStmt->execute()) {
+            $updateStmt->close();
             header("Location: bookings.php?msg=" . urlencode("Booking updated successfully"));
             exit();
         } else {
             $errors[] = "Database error: Could not update booking.";
+            $updateStmt->close();
         }
     }
 }
 
-require_once '../includes/header.php'; // Adjusted based on your likely header path
+require_once '../header.php'; // Adjusted based on your likely header path
 ?>
 
 <div class="admin-layout">
@@ -162,4 +181,4 @@ require_once '../includes/header.php'; // Adjusted based on your likely header p
     </div>
 </div>
 
-<?php require_once '../includes/footer.php'; ?>
+<?php require_once '../footer.php'; ?>

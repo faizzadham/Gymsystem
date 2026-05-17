@@ -38,22 +38,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = 'Please enter a valid email address.';
     } else {
         try {
-            $conn->beginTransaction();
+            mysqli_begin_transaction($conn);
 
             // 1. Update members table
             $updMem = $conn->prepare("UPDATE members SET full_name = ?, email = ?, phone = ?, gender = ? WHERE member_id = ?");
-            $updMem->execute([$fullName, $email, $phone, $gender, $member['member_id']]);
+            $updMem->bind_param("ssssi", $fullName, $email, $phone, $gender, $member['member_id']);
+            $updMem->execute();
+            $updMem->close();
 
             // 2. Sync email to users table
             $updUsr = $conn->prepare("UPDATE users SET email = ? WHERE user_id = ?");
-            $updUsr->execute([$email, $userId]);
+            $updUsr->bind_param("si", $email, $userId);
+            $updUsr->execute();
+            $updUsr->close();
 
-            $conn->commit();
+            mysqli_commit($conn);
             
             $success = 'Profile updated successfully!';
             $member = $fetchMember($conn, $userId); // Refresh local data
         } catch (Exception $e) {
-            $conn->rollBack();
+            mysqli_rollback($conn);
             $errors[] = 'An error occurred while saving: ' . $e->getMessage();
         }
     }
