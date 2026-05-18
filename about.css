@@ -340,4 +340,571 @@ body {
 }
 
 /* =========================================================
+   HEADER
+========================================================= */
+
+.site-header,
+header,
+.navbar {
+    position: sticky;
+    top: 0;
+
+    z-index: 1000;
+
+    width: 100%;
+
+    background:
+        rgba(255,255,255,0.95) !important;
+
+    backdrop-filter: blur(12px);
+
+    border-bottom:
+        1px solid var(--border-color);
+
+    box-shadow:
+        0 4px 6px -1px rgba(15,23,42,0.04),
+        0 2px 4px -1px rgba(15,23,42,0.02);
+}
+
+/* =========================================================
+   NAV CONTAINER
+========================================================= */
+
+.nav-container {
+    max-width: 1320px;
+
+    margin: 0 auto;
+
+    padding: 0.95rem 2rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 2rem;
+}
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.logo,
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+
+    text-decoration: none !important;
+}
+
+.logo-icon {
+    width: 52px;
+    height: 52px;
+
+    border-radius: 16px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--brand-blue-start),
+            var(--brand-blue-end)
+        );
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #ffffff;
+
+    font-size: 1.2rem;
+
+    box-shadow:
+        0 10px 20px rgba(37,99,235,0.22);
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo-title {
+    font-size: 1.1rem;
+
+    font-weight: 800;
+
+    color: var(--brand-navy);
+
+    line-height: 1.1;
+}
+
+.logo-subtitle {
+    margin-top: 0.2rem;
+
+    font-size: 0.78rem;
+
+    color: var(--text-muted);
+}
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.nav-menu,
+header ul,
+nav ul {
+    display: flex;
+
+    align-items: center;
+
+    gap: 0.4rem;
+
+    list-style: none;
+
+    margin: 0;
+    padding: 0;
+}
+
+/* =========================================================
+   NAV LINKS
+========================================================= */
+
+.nav-link,
+header ul li a,
+nav ul li a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    padding: 0.75rem 1rem;
+
+    border-radius: 12px;
+
+    text-decoration: none !important;
+
+    color: var(--text-muted) !important;
+
+    font-size: 0.92rem;
+
+    font-weight: 600;
+
+    transition:
+        all 0.25s ease;
+}
+
+/* Hover */
+
+.nav-link:hover,
+header ul li a:hover,
+nav ul li a:hover {
+    background:
+        rgba(37,99,235,0.08);
+
+    color: var(--primary) !important;
+
+    transform: translateY(-1px);
+}
+
+/* Active */
+
+.nav-link.active,
+header ul li a.active,
+nav ul li a.active {
+    background:
+        linear-gradient(
+            135deg,
+            var(--brand-blue-start),
+            var(--brand-blue-end)
+        );
+
+    color: #ffffff !important;
+
+    box-shadow:
+        0 10px 20px rgba(37,99,235,0.18);
+}
+
+/* =========================================================
+   NAV ACTIONS
+========================================================= */
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+/* =========================================================
+   PROFILE BUTTON
+========================================================= */
+
+.profile-btn {
+    width: 44px;
+    height: 44px;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eff6ff,
+            #dbeafe
+        );
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-decoration: none;
+
+    color: var(--primary);
+
+    transition:
+        all 0.25s ease;
+}
+
+.profile-btn:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 20px rgba(37,99,235,0.15);
+}
+
+/* =========================================================
+   LOGOUT BUTTON
+========================================================= */
+
+.logout-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    padding: 0.75rem 1rem;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--brand-blue-start),
+            var(--brand-blue-end)
+        );
+
+    color: #ffffff !important;
+
+    text-decoration: none;
+
+    font-size: 0.9rem;
+
+    font-weight: 700;
+
+    transition:
+        all 0.25s ease;
+
+    box-shadow:
+        0 10px 20px rgba(37,99,235,0.18);
+}
+
+.logout-btn:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 14px 24px rgba(37,99,235,0.24);
+}
+
+/* =========================================================
+   ADMIN HEADER AUTO SWITCH
+========================================================= */
+
+.admin-layout .site-header,
+.admin-layout header,
+.admin-layout .navbar {
+    background:
+        rgba(15,23,42,0.96) !important;
+
+    border-bottom:
+        1px solid #1e293b;
+}
+
+.admin-layout .logo-title,
+.admin-layout .nav-link,
+.admin-layout header ul li a,
+.admin-layout nav ul li a {
+    color: #cbd5e1 !important;
+}
+
+.admin-layout .nav-link:hover,
+.admin-layout header ul li a:hover,
+.admin-layout nav ul li a:hover {
+    background:
+        rgba(255,255,255,0.06);
+
+    color: #ffffff !important;
+}
+
+.admin-layout .nav-link.active,
+.admin-layout header ul li a.active,
+.admin-layout nav ul li a.active {
+    background:
+        linear-gradient(
+            135deg,
+            #334155,
+            #1e293b
+        );
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.site-footer,
+footer {
+    background:
+        linear-gradient(
+            135deg,
+            #0f172a,
+            #111827
+        );
+
+    color: #94a3b8;
+
+    padding: 4rem 2rem 2rem;
+
+    margin-top: auto;
+
+    position: relative;
+
+    overflow: hidden;
+
+    border-top:
+        1px solid #1e293b;
+}
+
+/* Decorative Circle */
+
+.site-footer::before,
+footer::before {
+    content: "";
+
+    position: absolute;
+
+    width: 340px;
+    height: 340px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,255,255,0.05);
+
+    top: -160px;
+    right: -120px;
+}
+
+/* =========================================================
+   FOOTER CONTAINER
+========================================================= */
+
+.footer-container {
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    position: relative;
+    z-index: 2;
+}
+
+/* =========================================================
+   FOOTER GRID
+========================================================= */
+
+.footer-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(220px, 1fr));
+
+    gap: 2.5rem;
+
+    margin-bottom: 2rem;
+}
+
+/* =========================================================
+   FOOTER TITLES
+========================================================= */
+
+.footer-brand h2,
+.footer-links h3,
+.footer-contact h3,
+footer h3,
+footer h4 {
+    color: #ffffff;
+
+    margin-top: 0;
+    margin-bottom: 1.2rem;
+
+    font-size: 1.1rem;
+
+    font-weight: 700;
+}
+
+/* =========================================================
+   FOOTER TEXT
+========================================================= */
+
+.footer-brand p,
+footer p {
+    line-height: 1.8;
+
+    color: #94a3b8;
+}
+
+/* =========================================================
+   FOOTER LINKS
+========================================================= */
+
+.footer-links ul,
+.footer-contact ul {
+    list-style: none;
+
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li,
+.footer-contact li {
+    margin-bottom: 0.8rem;
+}
+
+.footer-links a,
+.footer-contact a,
+footer a {
+    color: #94a3b8;
+
+    text-decoration: none;
+
+    transition:
+        all 0.25s ease;
+}
+
+.footer-links a:hover,
+.footer-contact a:hover,
+footer a:hover {
+    color: #3b82f6;
+
+    padding-left: 4px;
+}
+
+/* =========================================================
+   SOCIAL ICONS
+========================================================= */
+
+.footer-social,
+.social-icons {
+    display: flex;
+
+    gap: 0.8rem;
+
+    margin-top: 1rem;
+}
+
+.footer-social a,
+.social-icons a {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 14px;
+
+    background:
+        rgba(255,255,255,0.08);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #ffffff !important;
+
+    transition:
+        all 0.25s ease;
+}
+
+.footer-social a:hover,
+.social-icons a:hover {
+    transform: translateY(-3px);
+
+    background:
+        #2563eb;
+}
+
+/* =========================================================
+   FOOTER BOTTOM
+========================================================= */
+
+.footer-bottom {
+    padding-top: 1.5rem;
+
+    border-top:
+        1px solid rgba(255,255,255,0.08);
+
+    text-align: center;
+
+    color: #64748b;
+
+    font-size: 0.85rem;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 992px) {
+
+    .nav-container {
+        padding: 1rem 1.5rem;
+    }
+
+    .nav-menu,
+    header ul,
+    nav ul {
+        gap: 0.2rem;
+    }
+
+    .nav-link,
+    header ul li a,
+    nav ul li a {
+        padding: 0.7rem 0.85rem;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .nav-container {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 1rem;
+    }
+
+    .nav-menu,
+    header ul,
+    nav ul {
+        flex-wrap: wrap;
+
+        width: 100%;
+    }
+
+    .nav-link,
+    header ul li a,
+    nav ul li a {
+        width: 100%;
+
+        justify-content: flex-start;
+    }
+
+    .site-footer,
+    footer {
+        padding: 3rem 1rem 1.5rem;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
 }
