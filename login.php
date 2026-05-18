@@ -88,3 +88,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </div>
 
 <?php require_once 'footer.php'; ?>
+
+<style>
+/* Instant fix block */
+.nav-menu, .footer-col ul { list-style: none !important; padding: 0; margin: 0; }
+.nav-container { display: flex !important; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+.nav-menu { display: flex !important; gap: 25px; }
+.footer-grid { display: flex !important; flex-wrap: wrap; justify-content: space-between; gap: 30px; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+.footer-col { flex: 1; min-width: 220px; }
+.social-links { display: flex !important; gap: 15px; }
+.nav-logo, .footer-logo { display: flex !important; align-items: center; gap: 10px; text-decoration: none; font-weight: 700; color: #4a148c; }
+.nav-menu li a { text-decoration: none; color: #4a148c; font-weight: 500; }
+.footer-col ul li a { text-decoration: none; color: #666; }
+</style>

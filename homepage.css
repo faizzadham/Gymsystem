@@ -229,3 +229,77 @@ body {
 .footer-bottom p {
     margin: 0;
 }
+
+/* ==========================================================================
+   HOMEPAGE GLOBAL HEADER REFIX
+   ========================================================================== */
+
+/* 1. Make the header container a clean row */
+header, nav {
+    background-color: #ffffff !important;
+    padding: 1rem 5%;
+    display: flex;
+    justify-content: space-between; /* Pushes Logo to left, Links to right */
+    align-items: center;
+    border-bottom: 1px solid #f1f5f9;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+}
+
+/* 2. Style the Logo/Brand Area */
+header a[href*="homepage"], 
+header .logo,
+.FitZone-brand {
+    color: #4f46e5 !important; /* Modern Indigo brand color */
+    font-size: 1.5rem !important;
+    font-weight: 800 !important;
+    text-decoration: none !important;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* 3. STRIP THE UGLY BULLETS and make navigation inline */
+header ul, 
+nav ul {
+    list-style: none !important;
+    list-style-type: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    flex-direction: row !important; /* Forces vertical list to horizontal row */
+    gap: 2rem !important; /* Spacing between navbar choices */
+    align-items: center;
+}
+
+header li, 
+nav li {
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+    list-style-type: none !important;
+}
+
+/* 4. Beautiful Navigation Links */
+header ul li a, 
+nav ul li a {
+    color: #334155 !important; /* Dark Slate link color */
+    text-decoration: none !important;
+    font-weight: 600 !important;
+    font-size: 1rem !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.4rem !important;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+/* Hover effects */
+header ul li a:hover, 
+nav ul li a:hover {
+    color: #4f46e5 !important; /* Transitions to Indigo brand color */
+}
+
+/* Optional: Make the Logout link stand out nicely */
+header ul li a[href*="logout"], 
+nav ul li a[href*="logout"] {
+    color: #ef4444 !important; /* Red highlight for logout */
+}
