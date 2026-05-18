@@ -4,6 +4,13 @@ requireMember();
 require_once '../connectdb.php'; 
 $pageTitle = 'Personal Trainers';
 
+// Base layout variables parsed by your root header.php
+$baseUrl = '/Gymsystem'; 
+$pageStyles = [
+    'login.css?v=2.0',          /* Outlines the structural alignment of header & footer */
+    'member/trainers.css?v=1.2' /* Outlines your core personal trainer layout cards grid */
+];
+
 // Fetch all trainers ordered by name
 $query = "SELECT * FROM trainers ORDER BY trainer_name";
 $result = $conn->query($query);
@@ -12,7 +19,6 @@ $trainers = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
 require_once '../header.php';
 ?>
 
-<link rel="stylesheet" href="trainers.css">
 <div class="container fade-in">
     <div class="page-header">
         <h1>
@@ -38,12 +44,10 @@ require_once '../header.php';
 
             <div class="trainer-card">
 
-                <!-- Avatar -->
                 <div class="avatar-wrapper">
                     <i class="fas fa-user-tie"></i>
                 </div>
 
-                <!-- Header -->
                 <div class="trainer-header">
                     <h3>
                         <?= htmlspecialchars($t['trainer_name']) ?>
@@ -54,7 +58,6 @@ require_once '../header.php';
                     </span>
                 </div>
 
-                <!-- Trainer Info -->
                 <div class="trainer-meta-list">
 
                     <div class="trainer-meta-item">
@@ -94,7 +97,6 @@ require_once '../header.php';
                     </div>
                 </div>
 
-                <!-- Footer -->
                 <div class="trainer-card-footer">
 
                     <span class="<?= $statusClass ?>">
@@ -114,3 +116,7 @@ require_once '../header.php';
         <?php endforeach; ?>
     </div>
 </div>
+
+<?php 
+require_once '../footer.php'; 
+?>
