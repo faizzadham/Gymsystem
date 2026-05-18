@@ -1,0 +1,335 @@
+/* ROOT VARIABLES - UPDATED PREMIUM DARK THEME */
+:root {
+    --bg-main: #0f172a;       /* Deep slate dark background */
+    --bg-card: #1e293b;       /* Slightly lighter slate for the table */
+    --bg-sidebar: #0f172a;    /* Matching sidebar background */
+    --text-primary: #f8fafc;  /* Crisp off-white text */
+    --text-muted: #94a3b8;    /* Muted gray text */
+    --primary-color: #3b82f6; /* Modern royal blue */
+    --primary-hover: #2563eb;
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --danger-color: #ef4444;
+    --border-color: #334155;  /* Subtle slate borders */
+}
+
+/* GLOBAL STYLES */
+body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* THE FIX: GLOBAL TOP NAVBAR / HEADER INTEGRATION */
+/* If your header.php uses a specific nav class, use it here instead of 'header' */
+header, .top-navbar, div[style*="background-color: white"] {
+    background-color: #ffffff !important;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 0.75rem 2rem;
+}
+
+header a, .top-navbar a {
+    color: #64748b !important; /* Elegant gray for top links */
+    text-decoration: none;
+    font-weight: 500;
+}
+
+header a:hover, .top-navbar a:hover {
+    color: #0f172a !important;
+}
+
+/* LAYOUT STRUCTURING */
+.admin-layout {
+    display: flex;
+    min-height: calc(100vh - 60px); /* Account for top navbar height */
+}
+
+/* SIDEBAR FIX */
+/* Cleans up those ugly unstyled blue bullets in your sidebar */
+.admin-layout php-include, 
+.admin-layout div:first-child,
+aside { 
+    background-color: var(--bg-sidebar);
+    width: 260px;
+    padding: 2rem 1rem;
+    border-right: 1px solid var(--border-color);
+}
+
+.admin-layout ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.admin-layout li {
+    margin-bottom: 0.5rem;
+}
+
+.admin-layout li a {
+    color: var(--text-muted) !important;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.admin-layout li a:hover,
+.admin-layout li.active a {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary) !important;
+}
+
+/* CONTENT CONTAINER */
+.admin-content {
+    flex: 1;
+    padding: 2.5rem;
+    background-color: var(--bg-main);
+}
+
+/* PAGE HEADER */
+.page-header {
+    margin-bottom: 2rem;
+}
+
+.page-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
+    color: var(--text-primary);
+    letter-spacing: -0.025em;
+}
+
+.page-header p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 1rem;
+}
+
+/* BUTTONS */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.25rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.15s ease;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    box-shadow: 0 4px 10px rgba(59, 130, 246, 0.25);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-1px);
+}
+
+.btn-sm {
+    padding: 0.5rem;
+    border-radius: 6px;
+}
+
+.btn-secondary {
+    background-color: #334155;
+    color: var(--text-primary);
+}
+
+.btn-secondary:hover {
+    background-color: #475569;
+}
+
+.btn-danger {
+    background-color: rgba(239, 68, 68, 0.2);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.btn-danger:hover {
+    background-color: var(--danger-color);
+    color: white;
+}
+
+.btn-group {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* TABLE CONTAINER & STYLE */
+.table-wrapper {
+    background-color: var(--bg-card);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.95rem;
+}
+
+th {
+    background-color: #111827;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+td {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    color: #e2e8f0;
+    vertical-align: middle;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr:hover td {
+    background-color: rgba(255, 255, 255, 0.015);
+}
+
+/* BADGES (STATUS) */
+.badge {
+    display: inline-block;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 50px;
+    letter-spacing: 0.025em;
+}
+
+.badge-success {
+    background-color: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+}
+
+.badge-warning {
+    background-color: rgba(245, 158, 11, 0.15);
+    color: #fbbf24;
+}
+
+/* ==========================================================================
+   ADMIN SPECIFIC HEADER & FOOTER OVERRIDES
+   ========================================================================== */
+
+/* 1. HEADER / TOP NAVIGATION FIX */
+/* Forces the header area to look exactly like the premium white bar dashboard */
+.admin-layout ~ header, 
+header, 
+nav {
+    background-color: #ffffff !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+    padding: 0.75rem 2rem !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Fixes the header's brand text/logo color */
+header .logo, 
+header a[href*="home"],
+header h1,
+header h2 {
+    color: #0f172a !important; /* Premium dark slate instead of purple/white */
+    font-weight: 700 !important;
+}
+
+/* Strips out the bullet points and un-styles the header list */
+header ul, 
+nav ul {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    gap: 1.5rem !important;
+}
+
+header li, 
+nav li {
+    margin: 0 !important;
+    list-style-type: none !important;
+}
+
+/* Styled navigation links */
+header ul li a, 
+nav ul li a {
+    color: #64748b !important; /* Elegant gray */
+    text-decoration: none !important;
+    font-weight: 500 !important;
+    font-size: 0.95rem !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    transition: color 0.2s ease !important;
+}
+
+header ul li a:hover, 
+nav ul li a:hover {
+    color: #3b82f6 !important; /* Vibrant highlight on hover */
+}
+
+
+/* 2. FOOTER FIX */
+/* Hides or blends the massive public footer so it doesn't clutter the admin views */
+footer {
+    background-color: #0b0f19 !important; /* Deepest dark tone */
+    border-top: 1px solid #1e293b !important;
+    padding: 2rem !important;
+    color: #94a3b8 !important;
+}
+
+/* Cleans up footer bullet lists */
+footer ul {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 1rem 0 0 0 !important;
+}
+
+footer li {
+    list-style-type: none !important;
+    margin-bottom: 0.5rem !important;
+}
+
+footer a {
+    color: #3b82f6 !important;
+    text-decoration: none !important;
+}
+
+footer a:hover {
+    text-decoration: underline !important;
+}
+
+/* Fixes the copyright and social media icon colors */
+footer p, 
+footer span, 
+footer i {
+    color: #64748b !important;
+}
+
+footer .social-icons a i, 
+footer a i {
+    color: #3b82f6 !important;
+    font-size: 1.2rem !important;
+}
