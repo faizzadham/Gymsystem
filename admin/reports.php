@@ -36,6 +36,8 @@ $trainerPerformance = $trainerPerformanceResult ? $trainerPerformanceResult->fet
 
 require_once '../header.php';
 ?>
+
+<link rel="stylesheet" href="report.css?">
 <div class="admin-layout">
     <?php include 'sidebar.php'; ?>
     <div class="admin-content">
