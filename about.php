@@ -4,6 +4,7 @@ $pageTitle = 'About';
 require_once 'header.php';
 ?>
 
+<link rel="stylesheet" href="about.css?">
 <section class="about-section fade-in">
     <h1>About FitZone Gym</h1>
     <p>Welcome to <strong>FitZone Gym</strong> — your premier fitness destination in Kuala Lumpur. Since our founding in 2020, we have been committed to helping our members achieve their fitness goals through world-class facilities, expert guidance, and an inclusive community.</p>
